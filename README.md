@@ -1,32 +1,45 @@
-# human-tracking-deepsort Project
-Human tracking system using YOLOv8 and DeepSORT – Deep Learning for Computer Vision course project.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/ultralytics/assets/main/yolov8/banner.png" width="85%" />
+</p>
 
-## 🛠️ Languages & Tools
+<h1 align="center">Human Tracking in Videos</h1>
+<h3 align="center">Deep Learning for Computer Vision – Course Project</h3>
 
-The following programming languages, frameworks, and libraries were used to build this project:
+<p align="center">
+  <code>Python 3.10+</code>
+  <code>YOLOv8</code>
+  <code>DeepSORT</code>
+  <code>PyTorch</code>
+  <code>OpenCV</code>
+  <code>Anaconda</code>
+</p>
 
-| Tool | Version | Purpose |
-|-----|--------|--------|
-| ![Python](https://www.python.org/static/community_logos/python-logo.png) | **3.10+** | Core programming language |
-| ![PyTorch](https://pytorch.org/assets/images/pytorch-logo.png) | **2.x** | Deep learning backend |
-| ![YOLOv8](https://raw.githubusercontent.com/ultralytics/assets/main/yolov8/yolo-logo.png) | **8.x** | Human detection |
-| ![DeepSORT](https://raw.githubusercontent.com/nwojke/deep_sort/master/resources/deep_sort.png) | **Realtime** | Multi-object tracking |
-| ![OpenCV](https://opencv.org/wp-content/uploads/2020/07/OpenCV_logo_black_.png) | **4.8+** | Video processing & visualization |
-| ![NumPy](https://numpy.org/images/logo.svg) | **1.24+** | Numerical operations |
-| ![Anaconda](https://upload.wikimedia.org/wikipedia/commons/e/ea/Conda_logo.svg) | Latest | Environment management |
-| ![VS Code](https://code.visualstudio.com/assets/images/code-stable.png) | Latest | Development environment |
+## 📌 Project Overview
 
-## 🎥 Demo Video
+This project implements a **real-time human tracking system** using **Deep Learning and Computer Vision** techniques.
 
-The following video demonstrates the full functionality of the system, including:
-- Real-time human detection
-- Multi-person tracking with stable IDs
-- Unique person counting
-- FPS measurement and visualization
+The system is capable of:
+- Detecting people in video streams
+- Tracking multiple individuals across consecutive frames
+- Assigning a **unique and stable ID** to each person
+- Counting the total number of **unique persons** appearing in the video
+- Visualizing results in real time with performance statistics
 
-▶️ **Watch the demo video:**  
-[Click here to view demo1.mp4](demo1.mp4)
+The project was developed as part of a **Deep Learning for Computer Vision** course and is designed to balance:
+- Academic correctness
+- Software engineering best practices
+- Real-world applicability
+## 📘 Project Documentation
 
-> Note:  
-> The demo video shows the system running on real video input using YOLOv8 and DeepSORT.
+A complete and detailed documentation of this project has been prepared externally and is available through the following file:
+
+👉 **[PROJECT_REPORT_LINK.md](PROJECT_REPORT_LINK.md)**
+
+This documentation includes:
+- System Architecture
+- Full execution and usage guide
+- Detailed explanation of each project component
+- Presentation slides and visual explanations
+
+The external documentation was created to provide a **clear academic report** and a **structured explanation** beyond what is typically included in a README.
 
