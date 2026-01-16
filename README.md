@@ -69,8 +69,3 @@ It illustrates:
 - ID assignment and temporal consistency
 - Unique person counting
 - Final visual output
-
-<p align="center">
-  <img src="assets/anatomy_human_tracking.png" width="90%" />
-</p>
-
