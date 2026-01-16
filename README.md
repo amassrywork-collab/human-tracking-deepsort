@@ -28,6 +28,23 @@ The project was developed as part of a **Deep Learning for Computer Vision** cou
 - Academic correctness
 - Software engineering best practices
 - Real-world applicability
+
+## 🧠 Anatomy of the Human Tracking System
+
+The following infographic provides a **high-level visual overview** of the complete Deep Learning pipeline used in this project.
+
+It illustrates:
+- Video input flow
+- Person detection using YOLOv8
+- Multi-object tracking with DeepSORT
+- ID assignment and temporal consistency
+- Unique person counting
+- Final visual output
+
+<p align="center">
+  <img src="assets/anatomy_human_tracking.png" width="90%" />
+</p>
+
 ## 📘 Project Documentation
 
 A complete and detailed documentation of this project has been prepared externally and is available through the following file:
@@ -41,4 +58,19 @@ This documentation includes:
 - Presentation slides and visual explanations
 
 The external documentation was created to provide a **clear academic report** and a **structured explanation** beyond what is typically included in a README.
+## 🧠 Anatomy of the Human Tracking System
+
+The following infographic provides a **high-level visual overview** of the complete Deep Learning pipeline used in this project.
+
+It illustrates:
+- Video input flow
+- Person detection using YOLOv8
+- Multi-object tracking with DeepSORT
+- ID assignment and temporal consistency
+- Unique person counting
+- Final visual output
+
+<p align="center">
+  <img src="assets/anatomy_human_tracking.png" width="90%" />
+</p>
 
