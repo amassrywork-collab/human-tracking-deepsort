@@ -1,0 +1,27 @@
+name: human_tracking_app
+description: A new Flutter project for Human Tracking.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  # For network requests
+  http: ^0.13.6
+  # For video streaming (mjpeg)
+  flutter_mjpeg: ^2.0.0
+  # For icons
+  font_awesome_flutter: ^10.6.0
+  # For glassmorphism
+  glassmorphism: ^3.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true

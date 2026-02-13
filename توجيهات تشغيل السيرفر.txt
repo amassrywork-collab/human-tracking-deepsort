@@ -1,0 +1,192 @@
+تمام 👍 هذه **أوامر تشغيل السيرفر فقط (Flask)** بدون أي شيء له علاقة بـ Flutter.
+
+سأعطيك النسخة المختصرة + النسخة الكاملة الاحترافية.
+
+---
+
+# ✅ أبسط أمر لتشغيل السيرفر
+
+داخل مجلد المشروع الذي فيه `app.py`:
+
+```powershell
+C:\Users\ahmad\AppData\Local\Programs\Python\Python311\python.exe app.py
+```
+
+---
+
+# ✅ إذا كنت داخل المجلد بالفعل وتستخدم Python الصحيح
+
+```powershell
+python app.py
+```
+
+(لكن فقط إذا كان Python الافتراضي هو 3.11 الذي ثبت فيه Flask)
+
+---
+
+# ✅ إيقاف السيرفر
+
+في نفس التيرمنال:
+
+```
+CTRL + C
+```
+
+---
+
+# ⭐ تأكد أن السيرفر متاح للشبكة (مهم)
+
+داخل `app.py` يجب أن يكون:
+
+```python
+app.run(host="0.0.0.0", port=5000, debug=True)
+```
+
+---
+
+# ✅ اختبار السيرفر من الكمبيوتر
+
+افتح المتصفح:
+
+```
+http://127.0.0.1:5000
+```
+
+---
+
+# ✅ اختبار السيرفر من الهاتف
+
+```
+http://10.10.10.47:5000
+```
+
+(إذا المنفذ مفتوح في Firewall)
+
+---
+
+# 🚀 أوامر كاملة نموذجية من الصفر (احترافي)
+
+```powershell
+cd C:\Users\ahmad\human-tracking-deepsort
+C:\Users\ahmad\AppData\Local\Programs\Python\Python311\python.exe app.py
+```
+
+---
+
+# 🧠 أمر مفيد جداً لمعرفة IP
+
+```powershell
+ipconfig
+```
+
+خذ IPv4 الخاص بالـ WiFi.
+
+---
+
+# 🎯 خلاصة التشغيل اليومي
+
+1️⃣ افتح التيرمنال
+2️⃣ ادخل مجلد المشروع
+3️⃣ شغّل السيرفر
+
+انتهى.
+
+---
+
+تمام 🔥 سأعطيك **ملف BAT احترافي** يشغّل السيرفر بحيث:
+
+✅ يشغّل Flask
+✅ يعمل على `0.0.0.0` (متاح لكل الشبكة)
+✅ يفتح المنفذ 5000 في Firewall تلقائياً
+✅ يطبع IP الجهاز
+✅ يفتح المتصفح تلقائياً
+✅ أي هاتف على نفس الشبكة يدخل الموقع
+
+تشغيل بضغطة مزدوجة فقط ✔
+
+---
+
+# ✅ انسخ هذا النص واحفظه باسم
+
+```
+run_server.bat
+```
+
+داخل مجلد المشروع (نفس مكان app.py)
+
+---
+
+## 📄 محتوى ملف BAT
+
+```bat
+@echo off
+title Flask Server - Network Mode
+
+echo ================================
+echo Starting Flask Server...
+echo ================================
+
+REM مسار Python الصحيح
+set PYTHON_PATH=C:\Users\ahmad\AppData\Local\Programs\Python\Python311\python.exe
+
+REM فتح المنفذ 5000 في الجدار الناري (إذا لم يكن موجود)
+echo Opening firewall port 5000...
+netsh advfirewall firewall add rule name="Flask Server Port 5000" dir=in action=allow protocol=TCP localport=5000 >nul 2>&1
+
+REM عرض IP الجهاز
+echo.
+echo Your Network IP addresses:
+ipconfig | findstr /i "IPv4"
+echo.
+echo Use this address on phone browser:
+echo http://YOUR_IP:5000
+echo.
+
+REM فتح المتصفح محلياً
+start http://127.0.0.1:5000
+
+REM تشغيل السيرفر
+echo Running server...
+%PYTHON_PATH% app.py
+
+pause
+```
+
+---
+
+# ✅ قبل التشغيل تأكد من شيء واحد فقط داخل app.py
+
+```python
+app.run(host="0.0.0.0", port=5000, debug=True)
+```
+
+---
+
+# 🚀 طريقة الاستخدام
+
+1️⃣ اضغط مرتين على
+`run_server.bat`
+
+2️⃣ سيظهر التيرمنال ويعرض IP مثل:
+
+```
+IPv4 Address . . . . . : 10.10.10.47
+```
+
+3️⃣ من الهاتف افتح:
+
+```
+http://10.10.10.47:5000
+```
+
+---
+
+# 🛑 إيقاف السيرفر
+
+داخل نافذة التيرمنال:
+
+```
+CTRL + C
+```
+
+---

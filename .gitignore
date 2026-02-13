@@ -1,0 +1,13 @@
+*.mp4
+*.pt
+__pycache__/
+*.pyc
+.env
+venv/
+App/build/
+App/.dart_tool/
+App/ios/
+App/android/
+App/linux/
+App/macos/
+App/windows/

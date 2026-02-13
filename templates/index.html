@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Human Tracking in Real Time</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="video-bg-overlay"></div>
+        <div class="hero-floater">
+            <!-- Decorative Elements -->
+            <div class="hero-deco top-right"><i class="fas fa-microchip"></i></div>
+            <div class="hero-deco bottom-left"><i class="fas fa-crosshairs"></i></div>
+            <div class="hero-deco top-left-small"><i class="fas fa-broadcast-tower"></i></div>
+
+            <div class="hero-content">
+                <h1 class="gradient-text">Human Tracking <br> in Real Time</h1>
+                <p class="subtitle">Advanced Deep Learning powered by YOLOv8 & DeepSORT</p>
+                <div class="hero-buttons">
+                    <a href="#demos" class="btn btn-primary">Watch Demo</a>
+                    <a href="#try-it" class="btn btn-secondary">Try Live</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Section -->
+    <!-- Info Section -->
+    <section class="info-section">
+        <div class="container">
+            <h2 class="section-title">Powering Intelligent Tracking</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>YOLOv8 Detection</h3>
+                    <p>Utilizing the latest in computer vision to detect humans with incredible speed and accuracy
+                        suitable for real-world applications.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>DeepSORT Tracking</h3>
+                    <p>Advanced tracking algorithm that associates detections across frames, maintaining unique IDs for
+                        every individual tracked.</p>
+                </div>
+                <div class="info-card">
+                    <div class="icon-wrapper">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-Time Engine</h3>
+                    <p>Optimized Python backend ensuring low-latency processing for instant feedback on both recorded
+                        and live video streams.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section (Comparison) -->
+    <section id="demos" class="demo-section">
+        <div class="container">
+            <h2 class="section-title">Performance Showcase</h2>
+            <div class="comparison-grid">
+                <div class="video-card">
+                    <h3><i class="fas fa-video"></i> Input Source</h3>
+                    <video controls muted autoplay loop>
+                        <source src="{{ url_for('static', filename='videos/input.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-card">
+                    <h3><i class="fas fa-bullseye"></i> Tracking Output</h3>
+                    <video controls muted autoplay loop>
+                        <source src="{{ url_for('static', filename='videos/output.mp4') }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Try It Section -->
+    <section id="try-it" class="try-section">
+        <div class="container">
+            <h2 class="section-title">Experience It Live</h2>
+            <div class="try-grid">
+                <div class="try-card">
+                    <i class="fas fa-camera feature-icon-fa"></i>
+                    <h3>Live Webcam</h3>
+                    <p>Process your camera feed in real-time.</p>
+                    <button onclick="startCamera()" class="btn btn-glow">Start Camera</button>
+                </div>
+                <div class="try-card">
+                    <i class="fas fa-cloud-upload-alt feature-icon-fa"></i>
+                    <h3>Upload Video</h3>
+                    <p>Analyze your own video files.</p>
+                    <form id="uploadForm" action="/upload_video" method="post" enctype="multipart/form-data">
+                        <label for="file-upload" class="custom-file-upload">
+                            Choose File
+                        </label>
+                        <input id="file-upload" type="file" name="file" accept="video/*" onchange="uploadVideo()" />
+                    </form>
+                </div>
+            </div>
+
+            <div id="live-feed-container" class="hidden">
+                <h3>Live Processing Feed</h3>
+                <!-- Hidden elements for capture -->
+                <video id="client_video" autoplay playsinline style="display:none;"></video>
+                <canvas id="capture_canvas" style="display:none;"></canvas>
+
+                <img id="video_feed" src="" alt="Video Feed"
+                    style="width: 100%; max-width: 800px; border-radius: 10px; margin-bottom: 20px;">
+                <button onclick="stopCamera()" class="btn btn-danger">Stop</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <div class="container">
+            <h2 class="section-title">Our Team</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='assets/team/Yahya_Jihad_Abu_Saqr.png') }}"
+                        alt="Yahya Jihad Abu Saqr" class="team-photo">
+                    <h3>Yahya Jihad Abu Saqr</h3>
+                    <p class="student-id">120213375</p>
+                    <div class="social-links">
+                        <span class="social-icon disabled"><i class="fab fa-github"></i></span>
+                        <span class="social-icon disabled"><i class="fab fa-linkedin"></i></span>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='assets/team/Ahmed_Monir_Almassri.png') }}"
+                        alt="Ahmed Monir Almassri" class="team-photo">
+                    <h3>Ahmed Monir Almassri</h3>
+                    <p class="student-id">120220138</p>
+                    <div class="social-links">
+                        <a href="https://github.com/amassrywork-collab" target="_blank" class="social-icon"><i
+                                class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/ahmed-m-a-almassri-15415b334" target="_blank"
+                            class="social-icon"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="team-card">
+                    <img src="{{ url_for('static', filename='assets/team/Ahmed_M_M_Abu_Sabha.png') }}"
+                        alt="Ahmed M. M. Abu Sabha" class="team-photo">
+                    <h3>Ahmed M. M. Abu Sabha</h3>
+                    <p class="student-id">120220304</p>
+                    <div class="social-links">
+                        <span class="social-icon disabled"><i class="fab fa-github"></i></span>
+                        <span class="social-icon disabled"><i class="fab fa-linkedin"></i></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Human Tracking Project. All rights reserved.</p>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+
+</html>
