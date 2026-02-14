@@ -15,6 +15,7 @@ filterpy>=1.4,<2.0
 
 # Web Server
 Flask>=2.0
+flask-cloudflared>=0.0.15
 
 # Torch note:
 # Ultralytics will require PyTorch. Install it depending on your environment (CPU/GPU) using the official PyTorch command.

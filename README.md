@@ -9,7 +9,7 @@ A powerful real-time human detection and tracking system using **YOLOv8** and **
 - **Real-Time Detection:** Powered by Ultralytics YOLOv8 for high-speed person detection.
 - **Advanced Tracking:** DeepSORT algorithm maintains unique IDs for individuals across frames.
 - **Multi-Device Support:** Use any smartphone or laptop camera as a video source via the web browser.
-- **Auto-Secure Tunneling:** Built-in Serveo integration via SSH for instant HTTPS access on mobile devices without any configuration.
+- **Auto-Secure Tunneling:** Built-in Cloudflare Tunnel integration for instant HTTPS access on mobile devices without any configuration.
 - **Interactive Web UI:** Modern, responsive dashboard built with HTML, CSS, and JavaScript.
 
 ---
@@ -19,7 +19,7 @@ A powerful real-time human detection and tracking system using **YOLOv8** and **
 - **Backend:** Python, Flask
 - **Computer Vision:** OpenCV, Ultralytics (YOLOv8), Deep-Sort-Realtime
 - **Frontend:** Vanilla JS, CSS (Glassmorphism design), HTML5
-- **Networking:** Serveo (via SSH tunnel)
+- **Networking:** Cloudflare Tunnel (via flask-cloudflared)
 
 ---
 
@@ -45,7 +45,7 @@ python app.py
 ### 4. Accessing the System
 Once the server starts, check the console output for two links:
 1. **Local Access:** `http://10.x.x.x:5000` (for devices on the same network).
-2. **Secure Remote Access:** Look for the `serveo.net` link (e.g., `https://xxxx.serveo.net`). **Use this link on your mobile phone to enable camera access.**
+2. **Secure Remote Access:** Look for the `trycloudflare.com` link (e.g., `https://random-word.trycloudflare.com`). **Use this link on your mobile phone to enable camera access.**
 
 ---
 

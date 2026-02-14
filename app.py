@@ -150,33 +150,14 @@ def process_frame():
     return {"image": f"data:image/jpeg;base64,{processed_img_base64}"}
 
 if __name__ == '__main__':
-    # Initialize Serveo Tunnel for secure access (HTTPS) via SSH
-    import subprocess
-    import threading
-    import time
-
-    def start_serveo():
-        # Wait a bit for Flask to start
-        time.sleep(2)
-        print(f"\n\n * [SERVEO] Attempting to create secure tunnel...")
-        # Start SSH tunnel to serveo.net
-        # -R 80:localhost:5000 means map port 80 on serveo to 5000 locally
-        ssh_command = "ssh -o StrictHostKeyChecking=no -R 80:localhost:5000 serveo.net"
-        process = subprocess.Popen(ssh_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-        
-        # Read output to find the URL
-        if process.stdout:
-            for line in iter(process.stdout.readline, ""):
-                if "Forwarding HTTP traffic from" in line:
-                    url = line.split("from")[1].strip()
-                    print(f"\n\n * [SERVEO] Public HTTPS URL: {url}")
-                    print(f" * Use this link on your phone to access the camera!\n\n")
-                    break
-                elif "Address already in use" in line:
-                    print(" * Serveo: Port already in use, please try again or wait a moment.")
-                print(line, end="")
-
-    # Start Serveo in a background thread
-    threading.Thread(target=start_serveo, daemon=True).start()
+    # Initialize Cloudflare Tunnel for secure access (HTTPS) without an account
+    try:
+        from flask_cloudflared import run_with_cloudflared
+        run_with_cloudflared(app)
+        print(f"\n\n * [CLOUDFLARE] Starting secure tunnel...")
+        print(f" * Look for the 'TryCloudflare' link in the output below!\n\n")
+    except Exception as e:
+        print(f" * Could not start Cloudflare Tunnel: {e}")
+        print(f" * Please ensure you have flask-cloudflared installed: pip install flask-cloudflared")
 
     app.run(host="0.0.0.0", port=5000, debug=False)
