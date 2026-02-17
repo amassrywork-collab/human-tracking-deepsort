@@ -67,8 +67,13 @@ function stopCamera() {
 }
 
 async function uploadVideo() {
+    console.log("uploadVideo triggered");
     const fileInput = document.getElementById('file-upload');
-    if (!fileInput.files.length) return;
+    if (!fileInput.files.length) {
+        console.log("No file selected");
+        return;
+    }
+    console.log("File selected:", fileInput.files[0].name);
 
     const formData = new FormData();
     formData.append('file', fileInput.files[0]);
