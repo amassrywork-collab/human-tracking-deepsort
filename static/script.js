@@ -90,7 +90,7 @@ async function uploadVideo() {
     modal.classList.remove('hidden');
     fill.style.width = '0%';
     text.innerText = '0%';
-    status.innerText = 'جاري رفع الملف...';
+    status.innerText = 'Uploading file...';
     actions.classList.add('hidden');
     streamImg.src = "";
 
@@ -104,7 +104,7 @@ async function uploadVideo() {
             const data = await response.json();
             const taskId = data.task_id;
 
-            status.innerText = 'جاري المعالجة...';
+            status.innerText = 'Processing...';
             // Start the processing stream
             streamImg.src = `/stream_processing/${taskId}`;
 
@@ -118,7 +118,7 @@ async function uploadVideo() {
 
                     if (progData.complete) {
                         clearInterval(progressInterval);
-                        status.innerText = 'اكتملت المعالجة!';
+                        status.innerText = 'Processing complete!';
                         actions.classList.remove('hidden');
 
                         downloadBtn.onclick = () => {
