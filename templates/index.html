@@ -169,6 +169,156 @@
         </div>
     </section>
 
+    <!-- Processing Modal -->
+    <div id="processing-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <h3 id="modal-title">جاري معالجة الفيديو...</h3>
+            <p id="modal-status">بدء المعالجة الذكية</p>
+
+            <div class="processing-preview">
+                <img id="processing_stream" src="" alt="Processing Feed">
+                <div class="processing-overlay">
+                    <i class="fas fa-microchip fa-spin"></i>
+                </div>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
+                </div>
+                <span id="progress-text">0%</span>
+            </div>
+
+            <div id="modal-actions" class="modal-actions hidden">
+                <p>اكتملت المعالجة بنجاح!</p>
+                <div class="action-buttons">
+                    <button id="download-btn" class="btn btn-primary">
+                        <i class="fas fa-download"></i> هل تريد تنزيل الفيديو؟
+                    </button>
+                    <button onclick="closeModal()" class="btn btn-secondary">إغلاق</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        /* Processing Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-content {
+            background: rgba(25, 25, 35, 0.95);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        .modal-content h3 {
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .processing-preview {
+            position: relative;
+            margin: 20px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            aspect-ratio: 16/9;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .processing-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .processing-overlay {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border-radius: 50%;
+            color: #00f2fe;
+        }
+
+        .progress-container {
+            margin: 25px 0;
+        }
+
+        .progress-bar-bg {
+            height: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
+            transition: width 0.4s ease;
+        }
+
+        #progress-text {
+            font-weight: 600;
+            color: #00f2fe;
+        }
+
+        .modal-actions {
+            margin-top: 20px;
+            animation: fadeInUp 0.5s ease forwards;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .hidden {
+            display: none !important;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
     <footer>
         <p>&copy; 2026 Human Tracking Project. All rights reserved.</p>
     </footer>
