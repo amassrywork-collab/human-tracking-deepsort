@@ -13,8 +13,9 @@ A state-of-the-art Graduation Project featuring real-time human tracking, pose e
 - 🧠 **Next-Gen Detection**: Integrated with **YOLO11** (Nano/Small/Medium support).
 - 👣 **Stable Tracking**: Uses **ByteTrack** for consistent identity retention.
 - 🧘‍♂️ **Action Recognition**: Real-time pose estimation to detect "Walking", "Standing", and "Falling".
-- 🎨 **Premium UI/UX**: Modern Glassmorphism dashboard with Dark Mode and vibrant gradients.
-- 📊 **Live Analytics**: Real-time charts powered by **Chart.js** to monitor person counts over time.
+- 📱 **Mobile Optimized**: Fully responsive sidebar and adaptive grid layouts for smartphones and tablets.
+- 🎨 **Premium UI/UX**: Modern Glassmorphism dashboard with **Staggered Entry Animations** and Scroll-reveal effects.
+- 📊 **Live Analytics**: Real-time charts powered by **Chart.js** with **CSV Engagement Export** capabilities.
 - ⚡ **Asynchronous Backend**: **FastAPI** integration for ultra-low latency video streaming.
 - 📂 **Persistent Storage**: Automated logging of all detections into a **SQLite** database.
 - 🛡️ **ROI Config**: Interactive "Region of Interest" (ROI) drawing tool to focus detection on specific zones.
