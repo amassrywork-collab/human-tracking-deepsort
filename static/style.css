@@ -1305,3 +1305,8 @@ p {
     align-items: center;
     border-radius: 50%;
 }
+
+@keyframes floating-bot {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-15px) rotate(2deg); }
+}
