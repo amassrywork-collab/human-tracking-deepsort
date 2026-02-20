@@ -1277,7 +1277,7 @@ p {
 
 /* Mascot Image Styles */
 .tour-robot-img {
-    width: 125px !important;
+    width: 160px !important;
     height: auto !important;
     filter: drop-shadow(0 0 25px rgba(14, 165, 233, 0.6)) !important;
     margin-top: 25px !important;
