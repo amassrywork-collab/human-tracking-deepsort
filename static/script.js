@@ -390,7 +390,7 @@ window.startTour = function () {
                 element: '.sidebar',
                 popover: {
                     title: 'القائمة الجانبية',
-                    description: 'استخدم هذه القائمة للتنقل بين شاشة التتبع، التحليلات، وسجل النشاطات.',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>استخدم هذه القائمة للتنقل بين شاشة التتبع، التحليلات، وسجل النشاطات.',
                     side: "right",
                     align: 'start'
                 }
@@ -399,7 +399,7 @@ window.startTour = function () {
                 element: '.viewport-card',
                 popover: {
                     title: 'نافذة البث المباشر',
-                    description: 'هنا يتم عرض معالجة الفيديو وتتبع الأشخاص في الوقت الحقيقي مع حساب الأعداد بدقة.',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>هنا يتم عرض معالجة الفيديو وتتبع الأشخاص في الوقت الحقيقي مع حساب الأعداد بدقة.',
                     side: "bottom",
                     align: 'center'
                 }
@@ -408,7 +408,7 @@ window.startTour = function () {
                 element: '.controls-card',
                 popover: {
                     title: 'لوحة التحكم',
-                    description: 'من هنا يمكنك اختيار مصدر الكاميرا، تفعيل "نمط السلوك"، أو رفع ملف فيديو للمعالجة الذكية.',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>من هنا يمكنك اختيار مصدر الكاميرا، تفعيل "نمط السلوك"، أو رفع ملف فيديو للمعالجة الذكية.',
                     side: "left",
                     align: 'start'
                 }
@@ -417,7 +417,7 @@ window.startTour = function () {
                 element: '.roi-controls',
                 popover: {
                     title: 'منطقة الاهتمام (ROI)',
-                    description: 'استخدم هذه الأدوات لتحديد منطقة معينة في الفيديو ليقوم النظام بالتركيز عليها فقط.',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>استخدم هذه الأدوات لتحديد منطقة معينة في الفيديو ليقوم النظام بالتركيز عليها فقط.',
                     side: "top",
                     align: 'center'
                 }
@@ -426,7 +426,7 @@ window.startTour = function () {
                 element: '.analytics-grid',
                 popover: {
                     title: 'الإحصائيات الحية',
-                    description: 'رسوم بيانية تفاعلية توضح ذروة الأشخاص المتواجدين وتوزيع سلوكياتهم (وقوف، مشي، الخ).',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>رسوم بيانية تفاعلية توضح ذروة الأشخاص المتواجدين وتوزيع سلوكياتهم (وقوف، مشي، الخ).',
                     side: "top",
                     align: 'center'
                 }
@@ -435,7 +435,7 @@ window.startTour = function () {
                 element: '.history-card',
                 popover: {
                     title: 'سجل Engagement',
-                    description: 'سجل مفصل لكل حركات الأشخاص المكتشفة مع إمكانية تصديرها كاملة كملف CSV.',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>سجل مفصل لكل حركات الأشخاص المكتشفة مع إمكانية تصديرها كاملة كملف CSV.',
                     side: "top",
                     align: 'center'
                 }

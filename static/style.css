@@ -934,6 +934,33 @@ body.dashboard-body {
     color: var(--text-secondary) !important;
     font-family: 'Outfit', sans-serif !important;
     line-height: 1.6 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.tour-character {
+    font-size: 3rem;
+    color: var(--accent-blue);
+    margin-bottom: 10px;
+    animation: floating-bot 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 15px rgba(14, 165, 233, 0.6));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@keyframes floating-bot {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
 }
 
 .driver-popover-btn {
