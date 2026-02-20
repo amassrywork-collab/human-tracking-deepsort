@@ -1326,3 +1326,26 @@ p {
         right: -10px;
     }
 }
+
+/* Chatbot RTL Fixes */
+.chat-body {
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+.bot-msg p {
+    border-radius: 15px 15px 0 15px !important;
+    text-align: right !important;
+}
+
+.quick-actions button {
+    text-align: right !important;
+}
+
+.bot-tooltip {
+    direction: rtl !important;
+}
+
+.chatbot-header {
+    flex-direction: row-reverse !important;
+}

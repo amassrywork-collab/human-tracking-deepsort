@@ -381,16 +381,16 @@ window.startTour = function () {
         animate: true,
         padding: 10,
         popoverClass: 'glass-popover',
-        progressText: 'خطوة {{current}} من {{total}}',
-        nextBtnText: 'التالي',
-        prevBtnText: 'السابق',
-        doneBtnText: 'إنهاء',
+        progressText: 'Step {{current}} of {{total}}',
+        nextBtnText: 'Next',
+        prevBtnText: 'Previous',
+        doneBtnText: 'Finish',
         steps: [
             {
                 element: '.sidebar',
                 popover: {
-                    title: 'القائمة الجانبية',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>استخدم هذه القائمة للتنقل بين شاشة التتبع، التحليلات، وسجل النشاطات.',
+                    title: 'Navigation Sidebar',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>Use this menu to switch between Tracking, Analytics, and Activity History.',
                     side: "right",
                     align: 'start'
                 }
@@ -398,8 +398,8 @@ window.startTour = function () {
             {
                 element: '.viewport-card',
                 popover: {
-                    title: 'نافذة البث المباشر',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>هنا يتم عرض معالجة الفيديو وتتبع الأشخاص في الوقت الحقيقي مع حساب الأعداد بدقة.',
+                    title: 'Live Viewport',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>Here you can see the real-time video processing and human tracking with accurate counts.',
                     side: "bottom",
                     align: 'center'
                 },
@@ -408,8 +408,8 @@ window.startTour = function () {
             {
                 element: '.controls-card',
                 popover: {
-                    title: 'لوحة التحكم',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>من هنا يمكنك اختيار مصدر الكاميرا، تفعيل "نمط السلوك"، أو رفع ملف فيديو للمعالجة الذكية.',
+                    title: 'Control Panel',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>Choose your camera source, toggle "Behavior Mode", or upload a video for intelligent processing.',
                     side: "left",
                     align: 'start'
                 },
@@ -418,8 +418,8 @@ window.startTour = function () {
             {
                 element: '.roi-controls',
                 popover: {
-                    title: 'منطقة الاهتمام (ROI)',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>استخدم هذه الأدوات لتحديد منطقة معينة في الفيديو ليقوم النظام بالتركيز عليها فقط.',
+                    title: 'Region of Interest (ROI)',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>Use these tools to define specific areas for the system to focus on, ignoring the rest.',
                     side: "top",
                     align: 'center'
                 },
@@ -428,8 +428,8 @@ window.startTour = function () {
             {
                 element: '.analytics-grid',
                 popover: {
-                    title: 'الإحصائيات الحية',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>رسوم بيانية تفاعلية توضح ذروة الأشخاص المتواجدين وتوزيع سلوكياتهم (وقوف، مشي، الخ).',
+                    title: 'Live Analytics',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>Interactive charts showing peak occupancy and behavioral distributions (Standing, Walking, etc.).',
                     side: "top",
                     align: 'center'
                 },
@@ -438,8 +438,8 @@ window.startTour = function () {
             {
                 element: '.history-card',
                 popover: {
-                    title: 'سجل Engagement',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>سجل مفصل لكل حركات الأشخاص المكتشفة مع إمكانية تصديرها كاملة كملف CSV.',
+                    title: 'Engagement History',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>A detailed log of all detected activities with the ability to export as a CSV file.',
                     side: "top",
                     align: 'center'
                 },
@@ -448,8 +448,8 @@ window.startTour = function () {
             {
                 element: '#chatbot-toggle-btn',
                 popover: {
-                    title: 'المساعد الذكي',
-                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>إذا واجهت أي مشكلة أو أردت مساعدة سريعة، تجدني دائماً هنا للإجابة على تساؤلاتك وتوجيهك.',
+                    title: 'AI Assistant',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>If you need any help, I am always here to answer your questions and guide you.',
                     side: "left",
                     align: 'center'
                 }
