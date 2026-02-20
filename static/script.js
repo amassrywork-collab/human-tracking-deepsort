@@ -541,11 +541,11 @@ window.botResponse = function (action) {
 
 // Check for first-time visit
 function checkFirstVisit() {
-    if (!localStorage.getItem('ht_pro_tour_v1')) {
+    if (!localStorage.getItem('ht_pro_tour_v2')) {
         setTimeout(() => {
             console.log("🎬 Starting Auto-Tour...");
             window.startTour();
-            localStorage.setItem('ht_pro_tour_v1', 'true');
+            localStorage.setItem('ht_pro_tour_v2', 'true');
         }, 2000);
     }
 }

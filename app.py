@@ -162,6 +162,10 @@ def download_video(task_id):
     task = processing_tasks[task_id]
     return send_from_directory(app.config['PROCESSED_FOLDER'], task["filename"], as_attachment=True)
 
+@app.route('/data/<path:filename>')
+def serve_data(filename):
+    return send_from_directory('data', filename)
+
 @app.route('/process_frame', methods=['POST'])
 def process_frame():
     import base64
