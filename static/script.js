@@ -397,85 +397,83 @@ window.startTour = function () {
                     align: 'start'
                 }
             },
-            },
-        {
             {
-            element: '.viewport-card',
-            popover: {
-                title: 'Live Viewport',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Here you can see the real-time video processing and human tracking with accurate counts.',
-                side: "bottom",
-                align: 'center'
+                element: '.viewport-card',
+                popover: {
+                    title: 'Live Viewport',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Here you can see the real-time video processing and human tracking with accurate counts.',
+                    side: "bottom",
+                    align: 'center'
+                },
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
-            onHighlightStarted: () => {
-                window.switchSection('tracking');
-                return new Promise(resolve => setTimeout(resolve, 400));
-            }
-        },
-        {
-            element: '.controls-card',
-            popover: {
-                title: 'Control Panel',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Choose your camera source, toggle "Behavior Mode", or upload a video for intelligent processing.',
-                side: "left",
-                align: 'start'
+            {
+                element: '.controls-card',
+                popover: {
+                    title: 'Control Panel',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Choose your camera source, toggle "Behavior Mode", or upload a video for intelligent processing.',
+                    side: "left",
+                    align: 'start'
+                },
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
-            onHighlightStarted: () => {
-                window.switchSection('tracking');
-                return new Promise(resolve => setTimeout(resolve, 400));
-            }
-        },
-        {
-            element: '.roi-controls',
-            popover: {
-                title: 'Region of Interest (ROI)',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Use these tools to define specific areas for the system to focus on, ignoring the rest.',
-                side: "top",
-                align: 'center'
+            {
+                element: '.roi-controls',
+                popover: {
+                    title: 'Region of Interest (ROI)',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Use these tools to define specific areas for the system to focus on, ignoring the rest.',
+                    side: "top",
+                    align: 'center'
+                },
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
-            onHighlightStarted: () => {
-                window.switchSection('tracking');
-                return new Promise(resolve => setTimeout(resolve, 400));
-            }
-        },
-        {
-            element: '.analytics-grid',
-            popover: {
-                title: 'Live Analytics',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Interactive charts showing peak occupancy and behavioral distributions (Standing, Walking, etc.).',
-                side: "top",
-                align: 'center'
+            {
+                element: '.analytics-grid',
+                popover: {
+                    title: 'Live Analytics',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Interactive charts showing peak occupancy and behavioral distributions (Standing, Walking, etc.).',
+                    side: "top",
+                    align: 'center'
+                },
+                onHighlightStarted: () => {
+                    window.switchSection('analytics');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
-            onHighlightStarted: () => {
-                window.switchSection('analytics');
-                return new Promise(resolve => setTimeout(resolve, 400));
-            }
-        },
-        {
-            element: '.history-card',
-            popover: {
-                title: 'Engagement History',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>A detailed log of all detected activities with the ability to export as a CSV file.',
-                side: "top",
-                align: 'center'
+            {
+                element: '.history-card',
+                popover: {
+                    title: 'Engagement History',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>A detailed log of all detected activities with the ability to export as a CSV file.',
+                    side: "top",
+                    align: 'center'
+                },
+                onHighlightStarted: () => {
+                    window.switchSection('history');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
-            onHighlightStarted: () => {
-                window.switchSection('history');
-                return new Promise(resolve => setTimeout(resolve, 400));
-            }
-        },
-        {
-            element: '#chatbot-toggle-btn',
-            popover: {
-                title: 'AI Assistant',
-                description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>If you need any help, I am always here to answer your questions and guide you.',
-                side: "left",
-                align: 'center'
-            }
-        },
+            {
+                element: '#chatbot-toggle-btn',
+                popover: {
+                    title: 'AI Assistant',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>If you need any help, I am always here to answer your questions and guide you.',
+                    side: "left",
+                    align: 'center'
+                }
+            },
         ]
-});
-driverObj.drive();
+    });
+    driverObj.drive();
 };
 
 // Help Bot Controller
