@@ -85,7 +85,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initROI();
     initScrollReveal();
+    // checkFirstVisit is called at the end of the script to ensure everything is defined
+    console.log("🔍 Checking first visit status...");
     checkFirstVisit();
+
 
     const heroBtn = document.querySelector('.hero-card .btn-primary');
     if (heroBtn) heroBtn.addEventListener('click', () => window.switchSection('tracking'));
@@ -478,8 +481,9 @@ window.startTour = function () {
 
 // Help Bot Controller
 window.toggleChatbot = function () {
-    const window = document.getElementById('chatbot-window');
-    window.classList.toggle('hidden');
+    console.log("🤖 Toggling Chatbot...");
+    const chatWindow = document.getElementById('chatbot-window');
+    if (chatWindow) chatWindow.classList.toggle('hidden');
 };
 
 window.botResponse = function (action) {
@@ -521,14 +525,16 @@ window.botResponse = function (action) {
 
 // Check for first-time visit
 function checkFirstVisit() {
-    if (!localStorage.getItem('ht_pro_tour_seen')) {
+    if (!localStorage.getItem('ht_pro_tour_v1')) {
         setTimeout(() => {
+            console.log("🎬 Starting Auto-Tour...");
             window.startTour();
-            localStorage.setItem('ht_pro_tour_seen', 'true');
+            localStorage.setItem('ht_pro_tour_v1', 'true');
         }, 2000);
     }
 }
 
 
 // Initialize tour on load
-checkFirstVisit();
+// checkFirstVisit(); // Removed duplicate call to avoid race conditions or double flagging
+
