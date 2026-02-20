@@ -1277,11 +1277,12 @@ p {
 
 /* Mascot Image Styles */
 .tour-robot-img {
-    width: 140px !important;
+    width: 125px !important;
     height: auto !important;
-    filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.7)) drop-shadow(0 0 40px rgba(37, 99, 235, 0.4)) !important;
-    margin-bottom: 20px !important;
-    animation: floating-bot 3.0s ease-in-out infinite;
+    filter: drop-shadow(0 0 25px rgba(14, 165, 233, 0.6)) !important;
+    margin-top: 25px !important;
+    margin-bottom: 15px !important;
+    animation: floating-bot 3.5s ease-in-out infinite;
     display: block;
     margin-left: auto;
     margin-right: auto;
@@ -1308,5 +1309,7 @@ p {
 
 @keyframes floating-bot {
     0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-10px) rotate(1.5deg); }
+}
     50% { transform: translateY(-15px) rotate(2deg); }
 }
