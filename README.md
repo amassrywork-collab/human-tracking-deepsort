@@ -71,7 +71,7 @@ Open your browser at `http://localhost:5000`.
 ## 👤 Author
 **Ahmed Monir Almassri**
 *Student ID: 120220138*
-*Graduation Project - Computer Science*
+*Graduation Project - Computer Engineering at IUGaza*
 
 ---
 
