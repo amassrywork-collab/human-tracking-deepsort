@@ -401,6 +401,22 @@ window.startTour = function () {
                 }
             },
             {
+                element: '#showcase-section',
+                popover: {
+                    title: 'Processing Showcase',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Check out our processing power! Here you can see a side-by-side comparison of raw input and AI-enhanced results.',
+                    side: "bottom",
+                    align: 'center'
+                },
+                onHighlightStarted: (element) => {
+                    window.switchSection('showcase');
+                    return new Promise(resolve => {
+                        element.classList.add('active'); // Force reveal activation
+                        setTimeout(resolve, 600);
+                    });
+                }
+            },
+            {
                 element: '.viewport-card',
                 popover: {
                     title: 'Live Viewport',
