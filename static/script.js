@@ -103,7 +103,7 @@ function initScrollReveal() {
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.content-section, .viewport-card, .controls-card, .chart-card, .summary-box, .history-card').forEach(el => {
+    document.querySelectorAll('.content-section, .viewport-card, .controls-card, .chart-card, .summary-box, .history-card, .showcase-container').forEach(el => {
         el.classList.add('reveal');
         observer.observe(el);
     });
@@ -395,6 +395,15 @@ window.startTour = function () {
                     description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Use this menu to switch between Tracking, Analytics, and Activity History.',
                     side: "right",
                     align: 'start'
+                }
+            },
+            {
+                element: '#video-showcase',
+                popover: {
+                    title: 'Processing Showcase',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Check out our processing power! Here you can see a side-by-side comparison of raw input and AI-enhanced results.',
+                    side: "top",
+                    align: 'center'
                 }
             },
             {

@@ -116,6 +116,38 @@
                         <button onclick="switchSection('tracking')" class="btn btn-primary">Start Live Tracking</button>
                     </div>
                 </div>
+
+                <!-- Video Showcase Section -->
+                <div id="video-showcase" class="showcase-container reveal">
+                    <div class="showcase-header">
+                        <h2 class="gradient-text">Processing Showcase</h2>
+                        <p>Real-time comparative analysis: Original vs. AI Processed</p>
+                    </div>
+                    <div class="showcase-grid">
+                        <div class="showcase-card glass">
+                            <div class="card-tag">Input Source</div>
+                            <div class="video-container">
+                                <video autoplay loop muted playsinline>
+                                    <source src="{{ url_for('static', path='videos/input.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="card-footer">
+                                <span><i class="fas fa-file-video"></i> RAW DATA</span>
+                            </div>
+                        </div>
+                        <div class="showcase-card glass">
+                            <div class="card-tag accent">AI Processed</div>
+                            <div class="video-container">
+                                <video autoplay loop muted playsinline>
+                                    <source src="{{ url_for('static', path='videos/processed.mp4') }}" type="video/mp4">
+                                </video>
+                            </div>
+                            <div class="card-footer">
+                                <span><i class="fas fa-microchip"></i> YOLO11 OPTIMIZED</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </section>
 
             <!-- Tracking Section -->
