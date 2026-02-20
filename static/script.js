@@ -402,8 +402,12 @@ window.startTour = function () {
                 popover: {
                     title: 'Processing Showcase',
                     description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Check out our processing power! Here you can see a side-by-side comparison of raw input and AI-enhanced results.',
-                    side: "top",
+                    side: "bottom",
                     align: 'center'
+                },
+                onHighlightStarted: (element) => {
+                    element.classList.add('active');
+                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             },
             {
