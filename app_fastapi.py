@@ -42,6 +42,14 @@ detector = HumanDetector()
 tracker = TrackerWrapper()
 pose_detector = PoseDetector()
 
+@app.get("/get_video/{filename}")
+async def get_video(filename: str):
+    file_path = os.path.join("static", "videos", filename)
+    if not os.path.exists(file_path):
+        return JSONResponse(status_code=404, content={"message": "Video not found"})
+    return FileResponse(file_path, media_type="video/mp4")
+
+
 # Global dictionary to track progress of video processing tasks
 processing_tasks = {}
 
