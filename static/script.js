@@ -402,7 +402,8 @@ window.startTour = function () {
                     description: '<div class="tour-character"><i class="fas fa-robot"></i></div>هنا يتم عرض معالجة الفيديو وتتبع الأشخاص في الوقت الحقيقي مع حساب الأعداد بدقة.',
                     side: "bottom",
                     align: 'center'
-                }
+                },
+                onHighlightStarted: () => window.switchSection('tracking')
             },
             {
                 element: '.controls-card',
@@ -411,7 +412,8 @@ window.startTour = function () {
                     description: '<div class="tour-character"><i class="fas fa-robot"></i></div>من هنا يمكنك اختيار مصدر الكاميرا، تفعيل "نمط السلوك"، أو رفع ملف فيديو للمعالجة الذكية.',
                     side: "left",
                     align: 'start'
-                }
+                },
+                onHighlightStarted: () => window.switchSection('tracking')
             },
             {
                 element: '.roi-controls',
@@ -420,7 +422,8 @@ window.startTour = function () {
                     description: '<div class="tour-character"><i class="fas fa-robot"></i></div>استخدم هذه الأدوات لتحديد منطقة معينة في الفيديو ليقوم النظام بالتركيز عليها فقط.',
                     side: "top",
                     align: 'center'
-                }
+                },
+                onHighlightStarted: () => window.switchSection('tracking')
             },
             {
                 element: '.analytics-grid',
@@ -429,7 +432,8 @@ window.startTour = function () {
                     description: '<div class="tour-character"><i class="fas fa-robot"></i></div>رسوم بيانية تفاعلية توضح ذروة الأشخاص المتواجدين وتوزيع سلوكياتهم (وقوف، مشي، الخ).',
                     side: "top",
                     align: 'center'
-                }
+                },
+                onHighlightStarted: () => window.switchSection('analytics')
             },
             {
                 element: '.history-card',
@@ -438,7 +442,8 @@ window.startTour = function () {
                     description: '<div class="tour-character"><i class="fas fa-robot"></i></div>سجل مفصل لكل حركات الأشخاص المكتشفة مع إمكانية تصديرها كاملة كملف CSV.',
                     side: "top",
                     align: 'center'
-                }
+                },
+                onHighlightStarted: () => window.switchSection('history')
             },
             {
                 element: '#chatbot-toggle-btn',
