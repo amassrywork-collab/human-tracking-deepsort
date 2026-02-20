@@ -84,7 +84,7 @@ def draw_bbox_with_id(
     frame: np.ndarray,
     bbox: List[int],
     track_id: int,
-    color: Tuple[int, int, int] = (0, 255, 0),
+    color: Tuple[int, int, int] = (238, 211, 34),
     thickness: int = 2
 ) -> None:
     """
@@ -126,7 +126,7 @@ def draw_bbox_with_id(
         (x1, y_text),
         cv2.FONT_HERSHEY_SIMPLEX,
         0.6,
-        (0, 0, 0),
+        (255, 255, 255),
         2,
         cv2.LINE_AA
     )

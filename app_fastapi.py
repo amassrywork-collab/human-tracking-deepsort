@@ -18,7 +18,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from detector import HumanDetector
 from tracker import TrackerWrapper
 from pose_detector import PoseDetector
-from database import init_db, start_session, log_detection, get_stats
+from database import init_db, start_session, log_detection, get_stats, log_activity, get_behavior_stats, get_activity_logs
 from utils import draw_bbox_with_id, clip_bbox_xyxy
 
 app = FastAPI()
@@ -32,6 +32,7 @@ os.makedirs(PROCESSED_FOLDER, exist_ok=True)
 # Initialize DB
 init_db()
 current_session_id = start_session("live")
+current_analysis_mode = "human" # Global state for behavior toggle
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
@@ -77,32 +78,54 @@ async def frame_generator(source=0, save_path=None, task_id=None):
             # 1. Detect & Track (YOLOv11 native)
             detections = detector.detect_and_track(frame)
             
-            # 2. Extract and format tracks
+            # Tracking
             tracks = tracker.update(detections)
+            unique_person_ids = set()
             
-            # 3. Action Recognition (Pose)
-            poses = pose_detector.estimate_pose(frame, [t["bbox"] for t in tracks])
+            # Action Recognition if behavior mode is active
+            poses = []
+            if current_analysis_mode == "behavior" and detections:
+                poses = pose_detector.estimate_pose(frame, [d["bbox"] for d in detections])
             
+            # Draw Bounding Boxes
             for i, tr in enumerate(tracks):
                 track_id = tr["track_id"]
                 bbox = tr["bbox"]
                 unique_person_ids.add(track_id)
+                
+                # Assign action if poses are available
+                action = "Standing/Walking"
+                if poses and i < len(poses):
+                    action = poses[i]["action"]
+                    tr["action"] = action # Add to track dict for logging
+                
                 draw_bbox_with_id(frame, bbox, track_id)
                 
-                # Draw Action Label if pose was detected
-                if i < len(poses):
-                    action = poses[i]["action"]
-                    cv2.putText(frame, action, (bbox[0], bbox[1] - 30), 
-                                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
+                # Draw Action Label if behavior mode
+                if current_analysis_mode == "behavior":
+                    (tw, th), baseline = cv2.getTextSize(action, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+                    tx = (bbox[0] + bbox[2]) // 2 - tw // 2
+                    ty = bbox[1] - 10
+                    cv2.putText(frame, action, (tx, ty),
+                                cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
             # Overlay Count
             count = len(unique_person_ids)
+            if tracks:
+                print(f"[DEBUG] Frame {frame_count}: Tracks={len(tracks)}, Count={count}")
+                
             cv2.putText(frame, f"Count: {count}", (10, 30), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (238, 211, 34), 2)
             
-            # Log to DB every 30 frames (approx 1 second)
+            # Log periodically (e.g., every 30 frames) to DB
             if frame_count % 30 == 0:
                 log_detection(current_session_id, count)
+                # Log individual track activities
+                for i, tr in enumerate(tracks):
+                    action = "Standing/Walking" # Default if no pose detector
+                    if 'action' in tr:
+                        action = tr['action']
+                    log_activity(current_session_id, tr["track_id"], action, 0.95)
 
             # Save frame
             if out:
@@ -153,26 +176,49 @@ async def process_frame(request: Request):
 
     # Detect & Track
     detections = detector.detect_and_track(frame)
+    # Tracking
     tracks = tracker.update(detections)
-    poses = pose_detector.estimate_pose(frame, [t["bbox"] for t in tracks])
-
     unique_person_ids = set()
+
+    # Action Recognition
+    poses = []
+    if current_analysis_mode == "behavior" and detections:
+        poses = pose_detector.estimate_pose(frame, [d["bbox"] for d in detections])
+
     for i, tr in enumerate(tracks):
         track_id = tr["track_id"]
         bbox = tr["bbox"]
         unique_person_ids.add(track_id)
+        
+        action = "Standing/Walking"
+        if poses and i < len(poses):
+            action = poses[i].get("action", "Standing/Walking")
+            tr["action"] = action
+
         draw_bbox_with_id(frame, bbox, track_id)
-        if i < len(poses):
-            cv2.putText(frame, poses[i]["action"], (bbox[0], bbox[1] - 30), 
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
+        if current_analysis_mode == "behavior":
+            (tw, th), baseline = cv2.getTextSize(action, cv2.FONT_HERSHEY_SIMPLEX, 0.5, 2)
+            tx = (bbox[0] + bbox[2]) // 2 - tw // 2
+            ty = bbox[1] - 10
+            cv2.putText(frame, action, (tx, ty), 
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
+    # Overlay Count
     cv2.putText(frame, f"Count: {len(unique_person_ids)}", (10, 30), 
-                cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                cv2.FONT_HERSHEY_SIMPLEX, 1, (238, 211, 34), 2)
 
-    ret, buffer = cv2.imencode('.jpg', frame)
-    processed_img_base64 = base64.b64encode(buffer).decode('utf-8')
-
-    return {"image": f"data:image/jpeg;base64,{processed_img_base64}"}
+    # Encode and Return
+    _, buffer = cv2.imencode('.jpg', frame)
+    encoded_image = f"data:image/jpeg;base64,{base64.b64encode(buffer).decode('utf-8')}"
+    
+    # Update DB for this interactive frame
+    if current_session_id:
+        log_detection(current_session_id, len(unique_person_ids))
+        for tr in tracks:
+            act = tr.get("action", "Standing/Walking")
+            log_activity(current_session_id, tr["track_id"], act, 0.95)
+            
+    return {"image": encoded_image}
 
 @app.post('/upload_video')
 async def upload_video(file: UploadFile = File(...)):
@@ -225,6 +271,35 @@ async def get_realtime_stats():
     stats = get_stats()
     return stats
 
+@app.get('/stats/behavior')
+async def get_behavioral_stats():
+    return get_behavior_stats()
+
+@app.get('/stats/history')
+async def get_history_logs():
+    return get_activity_logs()
+
+@app.get('/export_csv')
+async def export_csv_file():
+    import csv
+    import io
+    from fastapi.responses import StreamingResponse
+    
+    logs = get_activity_logs(limit=1000)
+    output = io.StringIO()
+    writer = csv.writer(output)
+    writer.writerow(["Timestamp", "Entity ID", "Action", "Confidence"])
+    
+    for log in logs:
+        writer.writerow([log["timestamp"], log["track_id"], log["action"], log["confidence"]])
+        
+    output.seek(0)
+    return StreamingResponse(
+        iter([output.getvalue()]),
+        media_type="text/csv",
+        headers={"Content-Disposition": "attachment; filename=human_tracking_logs.csv"}
+    )
+
 @app.get('/stats/summary')
 async def get_stats_summary():
     # Simple summary: Total detections in session
@@ -244,6 +319,26 @@ async def api_set_roi(roi: List[int]):
     detector.set_roi(roi)
     return {"status": "ROI updated", "roi": roi}
 
+@app.post('/reset_roi')
+async def api_reset_roi():
+    detector.set_roi(None)
+    return {"status": "ROI reset to default"}
+
+@app.post('/set_analysis_mode')
+async def api_set_analysis_mode(data: dict):
+    global current_analysis_mode
+    current_analysis_mode = data.get("mode", "human")
+    return {"status": "Analysis mode updated", "mode": current_analysis_mode}
+
 if __name__ == '__main__':
     import uvicorn
+    try:
+        from pycloudflared import try_cloudflare
+        print("\n[INFO] Starting Cloudflare Tunnel...")
+        # Simpler call without unsupported arguments
+        public_url = try_cloudflare(port=5000)
+        print(f"\n[SUCCESS] Public URL: {public_url}")
+    except Exception as e:
+        print(f"\n[WARNING] Could not start Cloudflare Tunnel: {e}")
+    
     uvicorn.run(app, host="0.0.0.0", port=5000)

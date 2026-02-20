@@ -25,6 +25,18 @@ def init_db():
             FOREIGN KEY (session_id) REFERENCES sessions (id)
         )
     ''')
+    # Table for behavior/activity logs
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS activity_logs (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            session_id INTEGER,
+            track_id INTEGER,
+            action TEXT,
+            confidence REAL,
+            timestamp TEXT,
+            FOREIGN KEY (session_id) REFERENCES sessions (id)
+        )
+    ''')
     conn.commit()
     conn.close()
 
@@ -47,6 +59,17 @@ def log_detection(session_id, person_count):
     conn.commit()
     conn.close()
 
+def log_activity(session_id, track_id, action, confidence):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cursor.execute('''
+        INSERT INTO activity_logs (session_id, track_id, action, confidence, timestamp) 
+        VALUES (?, ?, ?, ?, ?)
+    ''', (session_id, track_id, action, confidence, timestamp))
+    conn.commit()
+    conn.close()
+
 def get_stats():
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -54,6 +77,27 @@ def get_stats():
     data = cursor.fetchall()
     conn.close()
     return [{"timestamp": d[0], "count": d[1]} for d in data]
+
+def get_behavior_stats():
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute("SELECT action, COUNT(*) FROM activity_logs GROUP BY action")
+    data = cursor.fetchall()
+    conn.close()
+    return {d[0]: d[1] for d in data}
+
+def get_activity_logs(limit=20):
+    conn = sqlite3.connect(DB_PATH)
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT timestamp, track_id, action, confidence 
+        FROM activity_logs 
+        ORDER BY timestamp DESC 
+        LIMIT ?
+    ''', (limit,))
+    data = cursor.fetchall()
+    conn.close()
+    return [{"timestamp": d[0], "track_id": d[1], "action": d[2], "confidence": d[3]} for d in data]
 
 if __name__ == "__main__":
     init_db()

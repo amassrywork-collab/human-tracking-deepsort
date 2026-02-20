@@ -44,7 +44,7 @@ class HumanDetector:
         self.model.to(self.device)
         self.roi: Optional[List[int]] = None # [x1, y1, x2, y2]
 
-    def set_roi(self, roi: List[int]) -> None:
+    def set_roi(self, roi: Optional[List[int]]) -> None:
         """Set Region of Interest [x1, y1, x2, y2]."""
         self.roi = roi
 
@@ -83,10 +83,14 @@ class HumanDetector:
         detections: List[Dict] = []
         result = results[0]
 
-        if result.boxes is None or result.boxes.id is None:
+        if result.boxes is None:
             return detections
-
+            
+        print(f"[DEBUG] Found {len(result.boxes)} potential boxes")
+        
         boxes = result.boxes
+        has_id = boxes.id is not None
+        
         for i in range(len(boxes)):
             # Bounding box in xyxy format
             x1, y1, x2, y2 = boxes.xyxy[i].tolist()
@@ -97,13 +101,16 @@ class HumanDetector:
             x2 += offset_x
             y2 += offset_y
 
+            track_id = int(boxes.id[i].item()) if has_id else (i + 1) # Fallback to index if no ID
+            
             det = {
                 "bbox": [int(x1), int(y1), int(x2), int(y2)],
                 "conf": float(boxes.conf[i].item()),
-                "track_id": int(boxes.id[i].item())
+                "track_id": track_id
             }
             detections.append(det)
 
+        print(f"[DEBUG] Final detections count: {len(detections)}")
         return detections
 
     def detect_pose(self, frame_bgr: np.ndarray) -> List[Dict]:

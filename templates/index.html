@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Human Tracking Pro | AI Dashboard</title>
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/favicon.png') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', path='assets/favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='style.css') }}">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -48,10 +48,19 @@
 
             <div class="sidebar-footer">
                 <div class="team-mini">
-                    <img src="{{ url_for('static', filename='assets/team/Ahmed_Monir_Almassri.png') }}" alt="Ahmed">
+                    <img src="{{ url_for('static', path='assets/team/Ahmed_Monir_Almassri.png') }}" alt="Ahmed">
                     <div class="team-info">
                         <p class="name">Ahmed Monir</p>
                         <p class="id">120220138</p>
+                        <div class="social-links">
+                            <a href="https://www.linkedin.com/in/ahmed-m-a-almassri-15415b334/" target="_blank"
+                                title="LinkedIn">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://github.com/amassrywork-collab" target="_blank" title="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -61,6 +70,9 @@
         <main class="main-content">
             <!-- Header Bar -->
             <header class="top-bar">
+                <button id="mobile-sidebar-toggle" class="btn-icon mobile-only">
+                    <i class="fas fa-bars"></i>
+                </button>
                 <div class="search-bar">
                     <i class="fas fa-search"></i>
                     <input type="text" placeholder="Search detections...">
@@ -79,20 +91,24 @@
 
             <!-- Home Section (Hero) -->
             <section id="home-section" class="content-section active">
-                <div class="hero-card glass">
-                    <h1 class="gradient-text">Human Tracking <br> Intelligence Pro</h1>
-                    <p>Next-gen computer vision powered by YOLO11, ByteTrack, and FastAPI.</p>
-                    <div class="hero-stats">
-                        <div class="stat-box">
-                            <span class="stat-val">98.5%</span>
-                            <span class="stat-label">Accuracy</span>
+                <div class="hero-wrapper">
+                    <i class="fas fa-robot bg-icon top-right"></i>
+                    <i class="fas fa-brain bg-icon bottom-left"></i>
+                    <div class="hero-card glass">
+                        <h1 class="gradient-text">Human Tracking <br> Intelligence Pro</h1>
+                        <p>Next-gen computer vision powered by YOLO11, ByteTrack, and FastAPI.</p>
+                        <div class="hero-stats">
+                            <div class="stat-box">
+                                <span class="stat-val">98.5%</span>
+                                <span class="stat-label">Accuracy</span>
+                            </div>
+                            <div class="stat-box">
+                                <span class="stat-val">30+</span>
+                                <span class="stat-label">FPS</span>
+                            </div>
                         </div>
-                        <div class="stat-box">
-                            <span class="stat-val">30+</span>
-                            <span class="stat-label">FPS</span>
-                        </div>
+                        <button onclick="switchSection('tracking')" class="btn btn-primary">Start Live Tracking</button>
                     </div>
-                    <button onclick="switchSection('tracking')" class="btn btn-primary">Start Live Tracking</button>
                 </div>
             </section>
 
@@ -101,10 +117,10 @@
                 <div class="tracking-grid">
                     <div class="viewport-card glass">
                         <div class="card-header">
-                            <h3><i class="fas fa-video"></i> Real-time Viewport</h3>
+                            <h3><i class="fas fa-video"></i> Live Analysis Viewport</h3>
                             <div class="controls">
-                                <button onclick="startCamera()" class="btn-icon" title="Start Webcam"><i
-                                        class="fas fa-camera"></i></button>
+                                <button onclick="startCamera()" class="btn-icon" title="Start Stream"><i
+                                        class="fas fa-play"></i></button>
                                 <button onclick="stopCamera()" class="btn-icon danger" title="Stop"><i
                                         class="fas fa-stop"></i></button>
                             </div>
@@ -112,36 +128,50 @@
                         <div class="video-wrapper">
                             <video id="client_video" autoplay playsinline style="display:none;"></video>
                             <canvas id="capture_canvas" style="display:none;"></canvas>
-                            <img id="video_feed" src="" alt="Waiting for feed...">
+                            <img id="video_feed" src="" alt="System standby. Click play to start feed.">
                             <div id="loading-overlay" class="hidden">
-                                <i class="fas fa-spinner fa-spin"></i>
-                                <p>Initializing Model...</p>
+                                <div class="loader"></div>
+                                <p>Optimizing Neural Engine...</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="controls-card glass">
-                        <h3><i class="fas fa-sliders-h"></i> Tracking Controls</h3>
+                        <h3><i class="fas fa-sliders-h"></i> Tracking Configuration</h3>
+
                         <div class="control-group">
-                            <label>Selection Mode</label>
-                            <div class="btn-toggle">
-                                <button class="active">Person</button>
-                                <button>Pose</button>
+                            <label><i class="fas fa-satellite-dish"></i> Feed Source</label>
+                            <div class="btn-toggle" id="source-toggle">
+                                <button class="active" onclick="setSource('webcam')">Local Device</button>
+                                <button onclick="setSource('server')">Server Cam</button>
                             </div>
                         </div>
+
                         <div class="control-group">
-                            <label>Upload New Source</label>
-                            <form id="uploadForm" class="upload-zone">
+                            <label><i class="fas fa-user-tag"></i> Analysis Mode</label>
+                            <div class="btn-toggle" id="analysis-toggle">
+                                <button id="mode-human" class="active" onclick="setAnalysisMode('human')">Human</button>
+                                <button id="mode-behavior" onclick="setAnalysisMode('behavior')">Behavior</button>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <label><i class="fas fa-file-video"></i> Offline Processing</label>
+                            <form id="uploadForm" class="upload-zone"
+                                onclick="document.getElementById('file-upload').click()">
                                 <input id="file-upload" type="file" onchange="uploadVideo()" hidden>
-                                <label for="file-upload">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <span>Drag & Drop or Click</span>
-                                </label>
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <p>Drop video files here or click to browse</p>
                             </form>
                         </div>
-                        <div class="control-group">
-                            <label>ROI Config</label>
-                            <button id="draw-roi-btn" class="btn btn-secondary btn-sm">Draw Detection Zone</button>
+
+                        <div class="control-group roi-controls">
+                            <button id="draw-roi-btn" class="btn btn-primary">
+                                <i class="fas fa-draw-polygon"></i> Set ROI
+                            </button>
+                            <button onclick="resetROI()" class="btn btn-secondary">
+                                <i class="fas fa-undo"></i> Reset
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -151,24 +181,26 @@
             <section id="analytics-section" class="content-section">
                 <div class="analytics-grid">
                     <div class="chart-card glass">
-                        <h3><i class="fas fa-chart-area"></i> Person Count Over Time</h3>
+                        <h3><i class="fas fa-chart-area"></i> Live Occupancy</h3>
                         <div class="chart-container">
                             <canvas id="countChart"></canvas>
                         </div>
                     </div>
                     <div class="chart-card glass">
-                        <h3><i class="fas fa-chart-bar"></i> Action Distribution</h3>
+                        <h3><i class="fas fa-chart-bar"></i> Behavioral Analysis</h3>
                         <div class="chart-container">
                             <canvas id="actionChart"></canvas>
                         </div>
                     </div>
                     <div class="summary-grid">
                         <div class="summary-box glass">
-                            <p>Peak Count</p>
+                            <i class="fas fa-users-cog"></i>
+                            <p>Peak Occupancy</p>
                             <h2 id="peak-count-val">0</h2>
                         </div>
                         <div class="summary-box glass">
-                            <p>Current Session</p>
+                            <i class="fas fa-clock"></i>
+                            <p>Streaming Time</p>
                             <h2 id="session-time-val">00:00</h2>
                         </div>
                     </div>
@@ -179,50 +211,86 @@
             <section id="history-section" class="content-section">
                 <div class="history-card glass">
                     <div class="card-header">
-                        <h3><i class="fas fa-list"></i> Detection History</h3>
-                        <button class="btn btn-secondary btn-sm">Export CSV</button>
+                        <h3><i class="fas fa-history"></i> Engagement Logs</h3>
+                        <button onclick="window.location.href='/export_csv'" class="btn btn-secondary btn-sm">
+                            <i class="fas fa-download"></i> Export CSV
+                        </button>
                     </div>
                     <div class="history-table-wrapper">
                         <table id="history-table">
                             <thead>
                                 <tr>
-                                    <th>Timestamp</th>
-                                    <th>ID</th>
+                                    <th>Time</th>
+                                    <th>Entity ID</th>
                                     <th>Action</th>
-                                    <th>Status</th>
+                                    <th>Confidence</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Data will be injected here -->
+                                <!-- Data injected via script.js -->
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings-section" class="content-section">
+                <div class="settings-grid">
+                    <div class="settings-card glass">
+                        <h3><i class="fas fa-sliders-h"></i> System Configuration</h3>
+                        <div class="config-item">
+                            <label>Confidence Threshold</label>
+                            <input type="range" min="0" max="100" value="50">
+                        </div>
+                        <div class="config-item">
+                            <label>Max Track Age (frames)</label>
+                            <input type="number" value="30">
+                        </div>
+                    </div>
+                    <div class="settings-card glass">
+                        <h3><i class="fas fa-shield-alt"></i> Model Preferences</h3>
+                        <div class="config-item">
+                            <label>YOLO Version</label>
+                            <select>
+                                <option>YOLOv11 Nano</option>
+                                <option>YOLOv11 Small</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </section>
         </main>
     </div>
 
-    <!-- Modals & Overlays -->
     <div id="processing-modal" class="modal-overlay hidden">
         <div class="modal-content glass">
-            <h3 id="modal-title">Optimizing Neural Network...</h3>
+            <h3 id="modal-title">
+                <i class="fas fa-cog fa-spin gear-icon"></i>
+                Optimizing Neural Network...
+            </h3>
             <div class="processing-preview">
                 <img id="processing_stream" src="" alt="Processing...">
-                <div class="progress-ring">
-                    <svg>
-                        <circle cx="35" cy="35" r="30"></circle>
-                    </svg>
-                    <span id="progress-text">0%</span>
+            </div>
+            <div class="progress-wrapper">
+                <div class="progress-header">
+                    <span id="progress-text">0% Completed</span>
+                </div>
+                <div class="progress-container">
+                    <div id="progress-bar-fill" class="progress-bar-fill"></div>
                 </div>
             </div>
+            <div id="modal-status" class="status-msg">Initializing engine...</div>
             <div id="modal-actions" class="hidden">
-                <button id="download-btn" class="btn btn-glow">Download Result</button>
-                <button onclick="closeModal()" class="btn btn-outline">Dismiss</button>
+                <button id="download-btn" class="btn btn-primary">
+                    <i class="fas fa-download"></i> Download Result
+                </button>
+                <button onclick="closeModal()" class="btn btn-secondary">Dismiss</button>
             </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', path='script.js') }}"></script>
 </body>
 
 </html>
