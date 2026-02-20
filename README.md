@@ -1,68 +1,79 @@
-# Human Tracking & Real-Time Monitoring 🚀
+# 🚀 Human Tracking Pro: AI-Powered Intelligence Dashboard
 
-A powerful real-time human detection and tracking system using **YOLOv8** and **DeepSORT**, featuring a web interface that supports multi-device camera streaming.
+[![YOLO11](https://img.shields.io/badge/Model-YOLO11-blue.svg)](https://ultralytics.com)
+[![FastAPI](https://img.shields.io/badge/Backend-FastAPI-009688.svg)](https://fastapi.tiangolo.com)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
-
-## 🌟 Key Features
-
-- **Real-Time Detection:** Powered by Ultralytics YOLOv8 for high-speed person detection.
-- **Advanced Tracking:** DeepSORT algorithm maintains unique IDs for individuals across frames.
-- **Multi-Device Support:** Use any smartphone or laptop camera as a video source via the web browser.
-- **Auto-Secure Tunneling:** Built-in Cloudflare Tunnel integration for instant HTTPS access on mobile devices without any configuration.
-- **Interactive Web UI:** Modern, responsive dashboard built with HTML, CSS, and JavaScript.
+A state-of-the-art Graduation Project featuring real-time human tracking, pose estimation, and a premium glassmorphic dashboard. Powered by **YOLO11**, **ByteTrack**, and **FastAPI**.
 
 ---
 
-## 🛠️ Technology Stack
+## ✨ Features
 
-- **Backend:** Python, Flask
-- **Computer Vision:** OpenCV, Ultralytics (YOLOv8), Deep-Sort-Realtime
-- **Frontend:** Vanilla JS, CSS (Glassmorphism design), HTML5
-- **Networking:** Cloudflare Tunnel (via flask-cloudflared)
+- 🧠 **Next-Gen Detection**: Integrated with **YOLO11** (Nano/Small/Medium support).
+- 👣 **Stable Tracking**: Uses **ByteTrack** for consistent identity retention.
+- 🧘‍♂️ **Action Recognition**: Real-time pose estimation to detect "Walking", "Standing", and "Falling".
+- 🎨 **Premium UI/UX**: Modern Glassmorphism dashboard with Dark Mode and vibrant gradients.
+- 📊 **Live Analytics**: Real-time charts powered by **Chart.js** to monitor person counts over time.
+- ⚡ **Asynchronous Backend**: **FastAPI** integration for ultra-low latency video streaming.
+- 📂 **Persistent Storage**: Automated logging of all detections into a **SQLite** database.
+- 🛡️ **ROI Config**: Interactive "Region of Interest" (ROI) drawing tool to focus detection on specific zones.
+
+---
+
+## 🛠️ Technical Stack
+
+- **Frontend**: HTML5, Vanilla CSS3 (Glassmorphism), JavaScript (ES6+), Chart.js.
+- **Backend**: FastAPI, Uvicorn, Jinja2 Templates.
+- **AI/ML**: Ultralytics YOLO11, ByteTrack, OpenCV.
+- **Database**: SQLite3.
+- **Deployment**: Docker support included.
 
 ---
 
 ## 🚀 Quick Start
 
 ### 1. Prerequisites
-Ensure you have Python 3.8+ installed.
+Ensure you have Python 3.10+ installed.
 
 ### 2. Installation
-Clone the repository and install the dependencies:
 ```bash
 git clone https://github.com/amassrywork-collab/human-tracking-deepsort.git
 cd human-tracking-deepsort
 pip install -r requirements.txt
 ```
 
-### 3. Running the Server
-Simply run the Flask application:
+### 3. Run the Server
+- **Windows (Recommended)**: Double-click `run_server.bat`.
+- **Manual**:
 ```bash
-python app.py
+python app_fastapi.py
 ```
 
-### 4. Accessing the System
-Once the server starts, check the console output for two links:
-1. **Local Access:** `http://10.x.x.x:5000` (for devices on the same network).
-2. **Secure Remote Access:** Look for the `trycloudflare.com` link (e.g., `https://random-word.trycloudflare.com`). **Use this link on your mobile phone to enable camera access.**
+Open your browser at `http://localhost:5000`.
 
 ---
 
-## 📱 Mobile Camera Usage
-1. Open the **HTTPS** link on your smartphone.
-2. Scroll to **"Experience It Live"**.
-3. Click **"Start Camera"** and **Allow** camera permissions.
-4. Watch the real-time tracking from your phone's feed!
+## 📁 Project Structure
+
+```text
+├── app_fastapi.py      # Main FastAPI server
+├── src/                # AI logic (Detector, Tracker, Pose)
+├── templates/          # Dashboard UI (Modern)
+├── static/             # CSS (Glassmorphism), JS (Analytics)
+├── models/             # YOLO weights
+├── data/               # SQLite database exports
+└── run_server.bat      # Quick-launch script
+```
 
 ---
 
-## 👥 Team
-- **Yahya Jihad Abu Saqr** (120213375)
-- **Ahmed Monir Almassri** (120220138)
-- **Ahmed M. M. Abu Sabha** (120220304)
+## 👤 Author
+**Ahmed Monir Almassri**
+*Student ID: 120220138*
+*Graduation Project - Computer Science*
 
 ---
 
-## 📄 License
-This project is for educational purposes as part of the Human Tracking Project 2026.
+## 📜 License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

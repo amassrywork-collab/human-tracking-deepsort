@@ -1,77 +1,40 @@
 """
 src/detector.py
 ---------------
-Human detection module based on YOLOv8 (Ultralytics).
+Human detection and tracking module based on YOLO11 (Ultralytics).
 
-This module is responsible ONLY for:
-- Loading the YOLOv8 model
-- Running inference on a single frame
-- Filtering detections to the 'person' class
-- Returning detections in a clean, unified format
-
-Design goals:
-- Clear separation of concerns (detection only, no tracking)
-- Minimal assumptions about downstream components
-- Stable interface for main.py
+Responsibilities:
+- Loading the YOLO11 model
+- Running inference and tracking on frames
+- Filtering results to the 'person' class
+- Handling Region of Interest (ROI)
 """
 
 from __future__ import annotations
-
-from typing import List, Dict
-
+from typing import List, Dict, Optional, Tuple
 import numpy as np
 import torch
 from ultralytics import YOLO
 
 
-class YOLOv8PersonDetector:
+class HumanDetector:
     """
-    YOLOv8-based detector specialized for human (person) detection.
-
-    Public API:
-    -----------
-    detector = YOLOv8PersonDetector(...)
-    detections = detector.detect(frame_bgr)
-
-    Each detection is a dict:
-        {
-            "bbox": [x1, y1, x2, y2],
-            "conf": float
-        }
+    YOLO11-based detector and tracker specialized for human detection.
     """
 
-    # COCO class index for "person"
     PERSON_CLASS_ID = 0
 
     def __init__(
         self,
-        weights_path: str = "yolov8n.pt",
-        conf_thres: float = 0.35,
-        iou_thres: float = 0.50,
+        weights_path: str = "yolo11n.pt",
+        conf_thres: float = 0.25,
+        iou_thres: float = 0.45,
         device: str = "cpu"
     ) -> None:
-        """
-        Initialize the YOLOv8 detector.
-
-        Parameters
-        ----------
-        weights_path : str
-            Path or name of YOLOv8 weights (e.g., yolov8n.pt).
-        conf_thres : float
-            Confidence threshold for filtering detections.
-        iou_thres : float
-            IoU threshold used internally by YOLO NMS.
-        device : str
-            'cpu' or 'cuda:0' (if available).
-        """
-
         self.conf_thres = float(conf_thres)
         self.iou_thres = float(iou_thres)
-
-        # Load model
         self.model = YOLO(weights_path)
-
-        # Set device explicitly
+        
         if device.startswith("cuda") and not torch.cuda.is_available():
             print("[WARN] CUDA requested but not available. Falling back to CPU.")
             self.device = "cpu"
@@ -79,64 +42,72 @@ class YOLOv8PersonDetector:
             self.device = device
 
         self.model.to(self.device)
+        self.roi: Optional[List[int]] = None # [x1, y1, x2, y2]
 
-    def detect(self, frame_bgr: np.ndarray) -> List[Dict]:
+    def set_roi(self, roi: List[int]) -> None:
+        """Set Region of Interest [x1, y1, x2, y2]."""
+        self.roi = roi
+
+    def detect_and_track(self, frame_bgr: np.ndarray, persist: bool = True) -> List[Dict]:
         """
-        Run human detection on a single BGR frame.
-
-        Parameters
-        ----------
-        frame_bgr : np.ndarray
-            Input image in BGR format (as provided by OpenCV).
-
-        Returns
-        -------
-        detections : List[Dict]
-            List of detections, each with:
-                - bbox : [x1, y1, x2, y2]
-                - conf : confidence score
+        Run detection and tracking on a single frame.
         """
-
         if frame_bgr is None or frame_bgr.size == 0:
             return []
 
-        # YOLOv8 accepts numpy arrays directly
-        results = self.model.predict(
-            source=frame_bgr,
+        # Process ROI if set
+        input_frame = frame_bgr
+        offset_x, offset_y = 0, 0
+        if self.roi:
+            x1, y1, x2, y2 = self.roi
+            # Ensure ROI is within frame boundaries
+            h, w = frame_bgr.shape[:2]
+            x1, y1 = max(0, x1), max(0, y1)
+            x2, y2 = min(w, x2), min(h, y2)
+            input_frame = frame_bgr[y1:y2, x1:x2]
+            offset_x, offset_y = x1, y1
+
+        # Use model.track for native tracking (ByteTrack by default)
+        # Note: 'persist=True' is crucial for maintaining IDs across frames
+        results = self.model.track(
+            source=input_frame,
             conf=self.conf_thres,
             iou=self.iou_thres,
             device=self.device,
-            verbose=False
+            persist=persist,
+            classes=[self.PERSON_CLASS_ID],
+            verbose=False,
+            tracker="bytetrack.yaml"
         )
 
         detections: List[Dict] = []
-
-        # YOLOv8 returns a list of Results (one per image)
         result = results[0]
 
-        if result.boxes is None:
+        if result.boxes is None or result.boxes.id is None:
             return detections
 
         boxes = result.boxes
-
-        # Iterate through detections
         for i in range(len(boxes)):
-            cls_id = int(boxes.cls[i].item())
-
-            # Filter only "person" class
-            if cls_id != self.PERSON_CLASS_ID:
-                continue
-
-            conf = float(boxes.conf[i].item())
-
             # Bounding box in xyxy format
             x1, y1, x2, y2 = boxes.xyxy[i].tolist()
+            
+            # Map back to original frame coordinates if ROI was used
+            x1 += offset_x
+            y1 += offset_y
+            x2 += offset_x
+            y2 += offset_y
 
-            detections.append(
-                {
-                    "bbox": [x1, y1, x2, y2],
-                    "conf": conf
-                }
-            )
+            det = {
+                "bbox": [int(x1), int(y1), int(x2), int(y2)],
+                "conf": float(boxes.conf[i].item()),
+                "track_id": int(boxes.id[i].item())
+            }
+            detections.append(det)
 
         return detections
+
+    def detect_pose(self, frame_bgr: np.ndarray) -> List[Dict]:
+        """Optional: Pose estimation for action recognition."""
+        # This would require a pose model (e.g., yolo11n-pose.pt)
+        # Placeholder for future expansion
+        return []

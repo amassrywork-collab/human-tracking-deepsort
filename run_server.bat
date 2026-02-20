@@ -24,6 +24,6 @@ REM Start local browser for testing
 start http://127.0.0.1:5000
 
 REM Run the server
-%PYTHON_PATH% app.py
+%PYTHON_PATH% -m uvicorn app_fastapi:app --host 0.0.0.0 --port 5000 --reload
 
 pause

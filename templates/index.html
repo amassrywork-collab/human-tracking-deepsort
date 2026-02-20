@@ -4,325 +4,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Human Tracking in Real Time</title>
+    <title>Human Tracking Pro | AI Dashboard</title>
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/favicon.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<body>
+<body class="dashboard-body">
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="video-bg-overlay"></div>
-        <div class="hero-floater">
-            <!-- Decorative Elements -->
-            <div class="hero-deco top-right"><i class="fas fa-microchip"></i></div>
-            <div class="hero-deco bottom-left"><i class="fas fa-crosshairs"></i></div>
-            <div class="hero-deco top-left-small"><i class="fas fa-broadcast-tower"></i></div>
-
-            <div class="hero-content">
-                <h1 class="gradient-text">Human Tracking <br> in Real Time</h1>
-                <p class="subtitle">Advanced Deep Learning powered by YOLOv8 & DeepSORT</p>
-                <div class="hero-buttons">
-                    <a href="#demos" class="btn btn-primary">Watch Demo</a>
-                    <a href="#try-it" class="btn btn-secondary">Try Live</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Info Section -->
-    <!-- Info Section -->
-    <section class="info-section">
-        <div class="container">
-            <h2 class="section-title">Powering Intelligent Tracking</h2>
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="icon-wrapper">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <h3>YOLOv8 Detection</h3>
-                    <p>Utilizing the latest in computer vision to detect humans with incredible speed and accuracy
-                        suitable for real-world applications.</p>
-                </div>
-                <div class="info-card">
-                    <div class="icon-wrapper">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <h3>DeepSORT Tracking</h3>
-                    <p>Advanced tracking algorithm that associates detections across frames, maintaining unique IDs for
-                        every individual tracked.</p>
-                </div>
-                <div class="info-card">
-                    <div class="icon-wrapper">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Real-Time Engine</h3>
-                    <p>Optimized Python backend ensuring low-latency processing for instant feedback on both recorded
-                        and live video streams.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Demo Section (Comparison) -->
-    <section id="demos" class="demo-section">
-        <div class="container">
-            <h2 class="section-title">Performance Showcase</h2>
-            <div class="comparison-grid">
-                <div class="video-card">
-                    <h3><i class="fas fa-video"></i> Input Source</h3>
-                    <video controls muted autoplay loop>
-                        <source src="{{ url_for('static', filename='videos/input.mp4') }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-                <div class="video-card">
-                    <h3><i class="fas fa-bullseye"></i> Tracking Output</h3>
-                    <video controls muted autoplay loop>
-                        <source src="{{ url_for('static', filename='videos/output.mp4') }}" type="video/mp4">
-                        Your browser does not support the video tag.
-                    </video>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Try It Section -->
-    <section id="try-it" class="try-section">
-        <div class="container">
-            <h2 class="section-title">Experience It Live</h2>
-            <div class="try-grid">
-                <div class="try-card">
-                    <i class="fas fa-camera feature-icon-fa"></i>
-                    <h3>Live Webcam</h3>
-                    <p>Process your camera feed in real-time.</p>
-                    <button onclick="startCamera()" class="btn btn-glow">Start Camera</button>
-                </div>
-                <div class="try-card">
-                    <i class="fas fa-cloud-upload-alt feature-icon-fa"></i>
-                    <h3>Upload Video</h3>
-                    <p>Analyze your own video files.</p>
-                    <form id="uploadForm" action="/upload_video" method="post" enctype="multipart/form-data">
-                        <label for="file-upload" class="custom-file-upload">
-                            Choose File
-                        </label>
-                        <input id="file-upload" type="file" name="file" accept="video/*" onchange="uploadVideo()" />
-                    </form>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-microchip gradient-icon"></i>
+                    <span>HT PRO</span>
                 </div>
             </div>
 
-            <div id="live-feed-container" class="hidden">
-                <h3>Live Processing Feed</h3>
-                <!-- Hidden elements for capture -->
-                <video id="client_video" autoplay playsinline style="display:none;"></video>
-                <canvas id="capture_canvas" style="display:none;"></canvas>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-section="home">
+                        <i class="fas fa-home"></i> <span>Home</span>
+                    </li>
+                    <li data-section="tracking">
+                        <i class="fas fa-video"></i> <span>Tracking</span>
+                    </li>
+                    <li data-section="analytics">
+                        <i class="fas fa-chart-line"></i> <span>Analytics</span>
+                    </li>
+                    <li data-section="history">
+                        <i class="fas fa-history"></i> <span>History</span>
+                    </li>
+                    <li data-section="settings">
+                        <i class="fas fa-cog"></i> <span>Settings</span>
+                    </li>
+                </ul>
+            </nav>
 
-                <img id="video_feed" src="" alt="Video Feed"
-                    style="width: 100%; max-width: 800px; border-radius: 10px; margin-bottom: 20px;">
-                <button onclick="stopCamera()" class="btn btn-danger">Stop</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Team Section -->
-    <section class="team-section">
-        <div class="container">
-            <h2 class="section-title">Our Team</h2>
-            <div class="team-grid">
-                <div class="team-card">
-                    <img src="{{ url_for('static', filename='assets/team/Yahya_Jihad_Abu_Saqr.png') }}"
-                        alt="Yahya Jihad Abu Saqr" class="team-photo">
-                    <h3>Yahya Jihad Abu Saqr</h3>
-                    <p class="student-id">120213375</p>
-                    <div class="social-links">
-                        <span class="social-icon disabled"><i class="fab fa-github"></i></span>
-                        <span class="social-icon disabled"><i class="fab fa-linkedin"></i></span>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <img src="{{ url_for('static', filename='assets/team/Ahmed_Monir_Almassri.png') }}"
-                        alt="Ahmed Monir Almassri" class="team-photo">
-                    <h3>Ahmed Monir Almassri</h3>
-                    <p class="student-id">120220138</p>
-                    <div class="social-links">
-                        <a href="https://github.com/amassrywork-collab" target="_blank" class="social-icon"><i
-                                class="fab fa-github"></i></a>
-                        <a href="https://www.linkedin.com/in/ahmed-m-a-almassri-15415b334" target="_blank"
-                            class="social-icon"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="team-card">
-                    <img src="{{ url_for('static', filename='assets/team/Ahmed_M_M_Abu_Sabha.png') }}"
-                        alt="Ahmed M. M. Abu Sabha" class="team-photo">
-                    <h3>Ahmed M. M. Abu Sabha</h3>
-                    <p class="student-id">120220304</p>
-                    <div class="social-links">
-                        <span class="social-icon disabled"><i class="fab fa-github"></i></span>
-                        <span class="social-icon disabled"><i class="fab fa-linkedin"></i></span>
+            <div class="sidebar-footer">
+                <div class="team-mini">
+                    <img src="{{ url_for('static', filename='assets/team/Ahmed_Monir_Almassri.png') }}" alt="Ahmed">
+                    <div class="team-info">
+                        <p class="name">Ahmed Monir</p>
+                        <p class="id">120220138</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </aside>
 
-    <!-- Processing Modal -->
+        <!-- Main Content Wrapper -->
+        <main class="main-content">
+            <!-- Header Bar -->
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search detections...">
+                </div>
+                <div class="status-indicators">
+                    <div class="status-item">
+                        <span class="pulse-dot green"></span>
+                        <span>Backend Active</span>
+                    </div>
+                    <div class="status-item">
+                        <span class="pulse-dot blue"></span>
+                        <span>YOLO11 Model Ready</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Home Section (Hero) -->
+            <section id="home-section" class="content-section active">
+                <div class="hero-card glass">
+                    <h1 class="gradient-text">Human Tracking <br> Intelligence Pro</h1>
+                    <p>Next-gen computer vision powered by YOLO11, ByteTrack, and FastAPI.</p>
+                    <div class="hero-stats">
+                        <div class="stat-box">
+                            <span class="stat-val">98.5%</span>
+                            <span class="stat-label">Accuracy</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-val">30+</span>
+                            <span class="stat-label">FPS</span>
+                        </div>
+                    </div>
+                    <button onclick="switchSection('tracking')" class="btn btn-primary">Start Live Tracking</button>
+                </div>
+            </section>
+
+            <!-- Tracking Section -->
+            <section id="tracking-section" class="content-section">
+                <div class="tracking-grid">
+                    <div class="viewport-card glass">
+                        <div class="card-header">
+                            <h3><i class="fas fa-video"></i> Real-time Viewport</h3>
+                            <div class="controls">
+                                <button onclick="startCamera()" class="btn-icon" title="Start Webcam"><i
+                                        class="fas fa-camera"></i></button>
+                                <button onclick="stopCamera()" class="btn-icon danger" title="Stop"><i
+                                        class="fas fa-stop"></i></button>
+                            </div>
+                        </div>
+                        <div class="video-wrapper">
+                            <video id="client_video" autoplay playsinline style="display:none;"></video>
+                            <canvas id="capture_canvas" style="display:none;"></canvas>
+                            <img id="video_feed" src="" alt="Waiting for feed...">
+                            <div id="loading-overlay" class="hidden">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Initializing Model...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-card glass">
+                        <h3><i class="fas fa-sliders-h"></i> Tracking Controls</h3>
+                        <div class="control-group">
+                            <label>Selection Mode</label>
+                            <div class="btn-toggle">
+                                <button class="active">Person</button>
+                                <button>Pose</button>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label>Upload New Source</label>
+                            <form id="uploadForm" class="upload-zone">
+                                <input id="file-upload" type="file" onchange="uploadVideo()" hidden>
+                                <label for="file-upload">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Drag & Drop or Click</span>
+                                </label>
+                            </form>
+                        </div>
+                        <div class="control-group">
+                            <label>ROI Config</label>
+                            <button id="draw-roi-btn" class="btn btn-secondary btn-sm">Draw Detection Zone</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics-section" class="content-section">
+                <div class="analytics-grid">
+                    <div class="chart-card glass">
+                        <h3><i class="fas fa-chart-area"></i> Person Count Over Time</h3>
+                        <div class="chart-container">
+                            <canvas id="countChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card glass">
+                        <h3><i class="fas fa-chart-bar"></i> Action Distribution</h3>
+                        <div class="chart-container">
+                            <canvas id="actionChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="summary-grid">
+                        <div class="summary-box glass">
+                            <p>Peak Count</p>
+                            <h2 id="peak-count-val">0</h2>
+                        </div>
+                        <div class="summary-box glass">
+                            <p>Current Session</p>
+                            <h2 id="session-time-val">00:00</h2>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- History Section -->
+            <section id="history-section" class="content-section">
+                <div class="history-card glass">
+                    <div class="card-header">
+                        <h3><i class="fas fa-list"></i> Detection History</h3>
+                        <button class="btn btn-secondary btn-sm">Export CSV</button>
+                    </div>
+                    <div class="history-table-wrapper">
+                        <table id="history-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>ID</th>
+                                    <th>Action</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Data will be injected here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modals & Overlays -->
     <div id="processing-modal" class="modal-overlay hidden">
-        <div class="modal-content">
-            <h3 id="modal-title">Video Processing...</h3>
-            <p id="modal-status">بدء المعالجة الذكية</p>
-
+        <div class="modal-content glass">
+            <h3 id="modal-title">Optimizing Neural Network...</h3>
             <div class="processing-preview">
-                <img id="processing_stream" src="" alt="Processing Feed">
-                <div class="processing-overlay">
-                    <i class="fas fa-microchip fa-spin"></i>
+                <img id="processing_stream" src="" alt="Processing...">
+                <div class="progress-ring">
+                    <svg>
+                        <circle cx="35" cy="35" r="30"></circle>
+                    </svg>
+                    <span id="progress-text">0%</span>
                 </div>
             </div>
-
-            <div class="progress-container">
-                <div class="progress-bar-bg">
-                    <div id="progress-fill" class="progress-fill" style="width: 0%;"></div>
-                </div>
-                <span id="progress-text">0%</span>
-            </div>
-
-            <div id="modal-actions" class="modal-actions hidden">
-                <p>اكتملت المعالجة بنجاح!</p>
-                <div class="action-buttons">
-                    <button id="download-btn" class="btn btn-primary">
-                        <i class="fas fa-download"></i> هل تريد تنزيل الفيديو؟
-                    </button>
-                    <button onclick="closeModal()" class="btn btn-secondary">إغلاق</button>
-                </div>
+            <div id="modal-actions" class="hidden">
+                <button id="download-btn" class="btn btn-glow">Download Result</button>
+                <button onclick="closeModal()" class="btn btn-outline">Dismiss</button>
             </div>
         </div>
     </div>
-
-    <style>
-        /* Processing Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-content {
-            background: rgba(25, 25, 35, 0.95);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 30px;
-            width: 90%;
-            max-width: 600px;
-            text-align: center;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.15);
-            color: #fff;
-        }
-
-        .modal-content h3 {
-            margin-bottom: 10px;
-            font-size: 1.5rem;
-            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .processing-preview {
-            position: relative;
-            margin: 20px 0;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-            aspect-ratio: 16/9;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .processing-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .processing-overlay {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 10px;
-            border-radius: 50%;
-            color: #00f2fe;
-        }
-
-        .progress-container {
-            margin: 25px 0;
-        }
-
-        .progress-bar-bg {
-            height: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 8px;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #00f2fe 0%, #4facfe 100%);
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.5);
-            transition: width 0.4s ease;
-        }
-
-        #progress-text {
-            font-weight: 600;
-            color: #00f2fe;
-        }
-
-        .modal-actions {
-            margin-top: 20px;
-            animation: fadeInUp 0.5s ease forwards;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-top: 15px;
-        }
-
-        .hidden {
-            display: none !important;
-            pointer-events: none;
-            opacity: 0;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-    </style>
-
-    <footer>
-        <p>&copy; 2026 Human Tracking Project. All rights reserved.</p>
-    </footer>
 
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
