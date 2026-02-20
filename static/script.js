@@ -406,8 +406,13 @@ window.startTour = function () {
                     align: 'center'
                 },
                 onHighlightStarted: (element) => {
-                    element.classList.add('active');
-                    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    return new Promise(resolve => {
+                        element.classList.add('active'); // Force reveal if it's currently hidden
+                        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                        // Give it enough time to scroll and for the CSS transition to finish
+                        setTimeout(resolve, 800);
+                    });
                 }
             },
             {
