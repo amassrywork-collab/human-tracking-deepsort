@@ -392,7 +392,7 @@ window.startTour = function () {
                 element: '.sidebar',
                 popover: {
                     title: 'Navigation Sidebar',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>Use this menu to switch between Tracking, Analytics, and Activity History.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Use this menu to switch between Tracking, Analytics, and Activity History.',
                     side: "right",
                     align: 'start'
                 }
@@ -401,7 +401,7 @@ window.startTour = function () {
                 element: '.viewport-card',
                 popover: {
                     title: 'Live Viewport',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>Here you can see the real-time video processing and human tracking with accurate counts.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Here you can see the real-time video processing and human tracking with accurate counts.',
                     side: "bottom",
                     align: 'center'
                 },
@@ -414,7 +414,7 @@ window.startTour = function () {
                 element: '.controls-card',
                 popover: {
                     title: 'Control Panel',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>Choose your camera source, toggle "Behavior Mode", or upload a video for intelligent processing.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Choose your camera source, toggle "Behavior Mode", or upload a video for intelligent processing.',
                     side: "left",
                     align: 'start'
                 },
@@ -427,7 +427,7 @@ window.startTour = function () {
                 element: '.roi-controls',
                 popover: {
                     title: 'Region of Interest (ROI)',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>Use these tools to define specific areas for the system to focus on, ignoring the rest.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Use these tools to define specific areas for the system to focus on, ignoring the rest.',
                     side: "top",
                     align: 'center'
                 },
@@ -440,7 +440,7 @@ window.startTour = function () {
                 element: '.analytics-grid',
                 popover: {
                     title: 'Live Analytics',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>Interactive charts showing peak occupancy and behavioral distributions (Standing, Walking, etc.).',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>Interactive charts showing peak occupancy and behavioral distributions (Standing, Walking, etc.).',
                     side: "top",
                     align: 'center'
                 },
@@ -453,7 +453,7 @@ window.startTour = function () {
                 element: '.history-card',
                 popover: {
                     title: 'Engagement History',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>A detailed log of all detected activities with the ability to export as a CSV file.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>A detailed log of all detected activities with the ability to export as a CSV file.',
                     side: "top",
                     align: 'center'
                 },
@@ -466,7 +466,7 @@ window.startTour = function () {
                 element: '#chatbot-toggle-btn',
                 popover: {
                     title: 'AI Assistant',
-                    description: '<div class="tour-character"><svg width="80" height="80" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="10" fill="url(#grad1)" fill-opacity="0.2" stroke="#0ea5e9" stroke-width="0.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" fill="#0ea5e9"/><circle cx="8.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="15.5" cy="10.5" r="1.5" fill="#0ea5e9"><animate attributeName="opacity" values="1;0.3;1" dur="2s" repeatCount="indefinite"/></circle><path d="M8 15h8v2H8z" fill="#0ea5e9"/><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" /><stop offset="100%" style="stop-color:#2563eb;stop-opacity:1" /></linearGradient></defs></svg></div>If you need any help, I am always here to answer your questions and guide you.',
+                    description: '<div class="tour-character"><img src="/static/assets/robot-mascot.png" class="tour-robot-img"></div>If you need any help, I am always here to answer your questions and guide you.',
                     side: "left",
                     align: 'center'
                 }

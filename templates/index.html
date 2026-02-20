@@ -298,10 +298,17 @@
 
     <!-- AI Assistant Chatbot -->
     <div id="ai-chatbot-container">
+        <button id="chatbot-toggle-btn" onclick="toggleChatbot()">
+            <img src="/static/assets/robot-mascot.png" class="bot-toggle-img">
+            <span class="bot-tooltip">Need Help?</span>
+        </button>
+
         <div id="chatbot-window" class="glass hidden">
             <div class="chatbot-header">
                 <div class="bot-info">
-                    <div class="bot-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="bot-avatar">
+                        <img src="/static/assets/robot-mascot.png" alt="Mascot">
+                    </div>
                     <div class="bot-name">
                         <h4>HT PRO Assistant</h4>
                         <span class="online-tag">Online</span>
