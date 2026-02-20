@@ -912,6 +912,60 @@ body.dashboard-body {
     }
 }
 
+/* Driver.js Custom Popover Styling */
+.glass-popover {
+    background: rgba(15, 23, 42, 0.85) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    border: 1px solid rgba(56, 189, 248, 0.3) !important;
+    border-radius: 20px !important;
+    color: white !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
+}
+
+.driver-popover-title {
+    color: var(--accent-blue) !important;
+    font-weight: 800 !important;
+    font-family: 'Outfit', sans-serif !important;
+    font-size: 1.25rem !important;
+}
+
+.driver-popover-description {
+    color: var(--text-secondary) !important;
+    font-family: 'Outfit', sans-serif !important;
+    line-height: 1.6 !important;
+}
+
+.driver-popover-btn {
+    background: var(--gradient-blue) !important;
+    color: white !important;
+    text-shadow: none !important;
+    border: none !important;
+    border-radius: 10px !important;
+    padding: 8px 18px !important;
+    font-weight: 700 !important;
+}
+
+.driver-popover-progress-text {
+    color: var(--text-secondary) !important;
+}
+
+.driver-popover-arrow-side-left {
+    border-right-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+.driver-popover-arrow-side-right {
+    border-left-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+.driver-popover-arrow-side-top {
+    border-bottom-color: rgba(15, 23, 42, 0.85) !important;
+}
+
+.driver-popover-arrow-side-bottom {
+    border-top-color: rgba(15, 23, 42, 0.85) !important;
+}
+
 /* Sidebar Overlay */
 .sidebar-overlay {
     display: none;

@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     initROI();
     initScrollReveal();
+    checkFirstVisit();
 
     const heroBtn = document.querySelector('.hero-card .btn-primary');
     if (heroBtn) heroBtn.addEventListener('click', () => window.switchSection('tracking'));
@@ -372,3 +373,84 @@ window.setAnalysisMode = async function (mode) {
         console.error("❌ Mode switch failed");
     }
 };
+
+// Guided Tour Controller
+window.startTour = function () {
+    const driverObj = window.driver.js.driver({
+        showProgress: true,
+        animate: true,
+        padding: 10,
+        popoverClass: 'glass-popover',
+        progressText: 'خطوة {{current}} من {{total}}',
+        nextBtnText: 'التالي',
+        prevBtnText: 'السابق',
+        doneBtnText: 'إنهاء',
+        steps: [
+            {
+                element: '.sidebar',
+                popover: {
+                    title: 'القائمة الجانبية',
+                    description: 'استخدم هذه القائمة للتنقل بين شاشة التتبع، التحليلات، وسجل النشاطات.',
+                    side: "right",
+                    align: 'start'
+                }
+            },
+            {
+                element: '.viewport-card',
+                popover: {
+                    title: 'نافذة البث المباشر',
+                    description: 'هنا يتم عرض معالجة الفيديو وتتبع الأشخاص في الوقت الحقيقي مع حساب الأعداد بدقة.',
+                    side: "bottom",
+                    align: 'center'
+                }
+            },
+            {
+                element: '.controls-card',
+                popover: {
+                    title: 'لوحة التحكم',
+                    description: 'من هنا يمكنك اختيار مصدر الكاميرا، تفعيل "نمط السلوك"، أو رفع ملف فيديو للمعالجة الذكية.',
+                    side: "left",
+                    align: 'start'
+                }
+            },
+            {
+                element: '.roi-controls',
+                popover: {
+                    title: 'منطقة الاهتمام (ROI)',
+                    description: 'استخدم هذه الأدوات لتحديد منطقة معينة في الفيديو ليقوم النظام بالتركيز عليها فقط.',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+            {
+                element: '.analytics-grid',
+                popover: {
+                    title: 'الإحصائيات الحية',
+                    description: 'رسوم بيانية تفاعلية توضح ذروة الأشخاص المتواجدين وتوزيع سلوكياتهم (وقوف، مشي، الخ).',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+            {
+                element: '.history-card',
+                popover: {
+                    title: 'سجل Engagement',
+                    description: 'سجل مفصل لكل حركات الأشخاص المكتشفة مع إمكانية تصديرها كاملة كملف CSV.',
+                    side: "top",
+                    align: 'center'
+                }
+            },
+        ]
+    });
+    driverObj.drive();
+};
+
+// Check for first-time visit
+function checkFirstVisit() {
+    if (!localStorage.getItem('ht_pro_tour_seen')) {
+        setTimeout(() => {
+            window.startTour();
+            localStorage.setItem('ht_pro_tour_seen', 'true');
+        }, 2000);
+    }
+}

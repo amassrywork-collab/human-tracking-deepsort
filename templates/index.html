@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Driver.js for Guided Tour -->
+    <script src="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.js.iife.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/driver.js@1.0.1/dist/driver.css" />
 </head>
 
 <body class="dashboard-body">
@@ -78,6 +81,9 @@
                     <input type="text" placeholder="Search detections...">
                 </div>
                 <div class="status-indicators">
+                    <button onclick="startTour()" class="btn-icon" title="Take a Tour">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
                     <div class="status-item">
                         <span class="pulse-dot green"></span>
                         <span>Backend Active</span>
