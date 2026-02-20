@@ -440,9 +440,61 @@ window.startTour = function () {
                     align: 'center'
                 }
             },
+            {
+                element: '#chatbot-toggle-btn',
+                popover: {
+                    title: 'المساعد الذكي',
+                    description: '<div class="tour-character"><i class="fas fa-robot"></i></div>إذا واجهت أي مشكلة أو أردت مساعدة سريعة، تجدني دائماً هنا للإجابة على تساؤلاتك وتوجيهك.',
+                    side: "left",
+                    align: 'center'
+                }
+            },
         ]
     });
     driverObj.drive();
+};
+
+// Help Bot Controller
+window.toggleChatbot = function () {
+    const window = document.getElementById('chatbot-window');
+    window.classList.toggle('hidden');
+};
+
+window.botResponse = function (action) {
+    const chatContent = document.getElementById('chat-content');
+    let response = "";
+    let targetSection = "";
+
+    switch (action) {
+        case 'start':
+            response = "لبدء التتبع، اختر مصدر الفيديو من لوحة التحكم (Control Panel) ثم اضغط على زر البث. يمكنك أيضاً رفع ملف فيديو!";
+            targetSection = "tracking";
+            break;
+        case 'analytics':
+            response = "قسم الإحصائيات يعرض لك تحليلات حية عن أعداد الأشخاص وسلوكياتهم المكتشفة بمرور الوقت.";
+            targetSection = "analytics";
+            break;
+        case 'roi':
+            response = "يمكنك رسم منطقة محددة (ROI) لتركيز التتبع عليها فقط وتجاهل باقي المشهد لزيادة الدقة.";
+            targetSection = "tracking";
+            break;
+        case 'export':
+            response = "يمكنك تصدير كافة البيانات المسجلة بصيغة CSV من خلال زر التجارة الموجود في صفحة السجل (History).";
+            targetSection = "history";
+            break;
+    }
+
+    if (response) {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'bot-msg';
+        msgDiv.innerHTML = `<p>${response}</p>`;
+        chatContent.appendChild(msgDiv);
+        chatContent.scrollTop = chatContent.scrollHeight;
+
+        if (targetSection) {
+            setTimeout(() => window.switchSection(targetSection), 1500);
+        }
+    }
 };
 
 // Check for first-time visit

@@ -296,6 +296,42 @@
         </div>
     </div>
 
+    <!-- AI Assistant Chatbot -->
+    <div id="ai-chatbot-container">
+        <div id="chatbot-window" class="glass hidden">
+            <div class="chatbot-header">
+                <div class="bot-info">
+                    <div class="bot-avatar"><i class="fas fa-robot"></i></div>
+                    <div class="bot-name">
+                        <h4>HT PRO Assistant</h4>
+                        <span class="online-tag">Online</span>
+                    </div>
+                </div>
+                <button onclick="toggleChatbot()" class="btn-close-chat"><i class="fas fa-times"></i></button>
+            </div>
+
+            <div id="chat-content" class="chat-body">
+                <div class="bot-msg">
+                    <p>مرحباً بك! أنا مساعدك الذكي. كيف يمكنني مساعدتك اليوم؟</p>
+                </div>
+                <div class="quick-actions">
+                    <button onclick="botResponse('start')">🚀 كيف أبدأ التتبع؟</button>
+                    <button onclick="botResponse('analytics')">📊 شرح الإحصائيات</button>
+                    <button onclick="botResponse('roi')">🛡️ تحديد المنطقة (ROI)</button>
+                    <button onclick="botResponse('export')">📂 تصدير البيانات</button>
+                    <button onclick="startTour()">🎓 جولة تعريفية كاملة</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="chatbot-toggle-btn" onclick="toggleChatbot()">
+            <div class="bot-icon-wrapper">
+                <i class="fas fa-robot"></i>
+            </div>
+            <span class="bot-tooltip">أحتاج مساعدة؟</span>
+        </button>
+    </div>
+
     <script src="{{ url_for('static', path='script.js') }}"></script>
 </body>
 
