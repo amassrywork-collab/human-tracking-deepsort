@@ -381,6 +381,8 @@ window.startTour = function () {
         animate: true,
         padding: 10,
         popoverClass: 'glass-popover',
+        overlayOpacity: 0.85,
+        stagePadding: 5,
         progressText: 'Step {{current}} of {{total}}',
         nextBtnText: 'Next',
         prevBtnText: 'Previous',
@@ -403,7 +405,10 @@ window.startTour = function () {
                     side: "bottom",
                     align: 'center'
                 },
-                onHighlightStarted: () => window.switchSection('tracking')
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
             {
                 element: '.controls-card',
@@ -413,7 +418,10 @@ window.startTour = function () {
                     side: "left",
                     align: 'start'
                 },
-                onHighlightStarted: () => window.switchSection('tracking')
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
             {
                 element: '.roi-controls',
@@ -423,7 +431,10 @@ window.startTour = function () {
                     side: "top",
                     align: 'center'
                 },
-                onHighlightStarted: () => window.switchSection('tracking')
+                onHighlightStarted: () => {
+                    window.switchSection('tracking');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
             {
                 element: '.analytics-grid',
@@ -433,7 +444,10 @@ window.startTour = function () {
                     side: "top",
                     align: 'center'
                 },
-                onHighlightStarted: () => window.switchSection('analytics')
+                onHighlightStarted: () => {
+                    window.switchSection('analytics');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
             {
                 element: '.history-card',
@@ -443,7 +457,10 @@ window.startTour = function () {
                     side: "top",
                     align: 'center'
                 },
-                onHighlightStarted: () => window.switchSection('history')
+                onHighlightStarted: () => {
+                    window.switchSection('history');
+                    return new Promise(resolve => setTimeout(resolve, 400));
+                }
             },
             {
                 element: '#chatbot-toggle-btn',
