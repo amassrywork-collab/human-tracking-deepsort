@@ -35,31 +35,13 @@ current_session_id = start_session("live")
 current_analysis_mode = "human" # Global state for behavior toggle
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/data", StaticFiles(directory="data"), name="data")
 templates = Jinja2Templates(directory="templates")
 
 # Initialize Detector, Tracker, and Pose
 detector = HumanDetector()
 tracker = TrackerWrapper()
 pose_detector = PoseDetector()
-
-@app.get("/get_video/{filename}")
-async def get_video(filename: str):
-    # Mapping filenames to original user-provided paths to save storage
-    if filename == "input.mp4":
-        file_path = os.path.abspath(os.path.join("data", "input2.mp4"))
-    elif filename == "processed_web.mp4":
-        file_path = os.path.abspath(os.path.join("static", "processed", "processed_input2.mp4"))
-    else:
-        file_path = os.path.join("static", "videos", filename)
-
-    print(f"🎬 Serving Video: {filename} from {file_path}")
-    
-    if not os.path.exists(file_path):
-        return JSONResponse(status_code=404, content={"message": f"Video not found at {file_path}"})
-    
-    # FileResponse in FastAPI/Starlette handles Range headers automatically
-    return FileResponse(file_path, media_type="video/mp4")
-
 
 # Global dictionary to track progress of video processing tasks
 processing_tasks = {}
