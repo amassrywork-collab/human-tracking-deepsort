@@ -528,3 +528,7 @@ function checkFirstVisit() {
         }, 2000);
     }
 }
+
+
+// Initialize tour on load
+checkFirstVisit();
