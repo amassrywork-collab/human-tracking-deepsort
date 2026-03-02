@@ -1,0 +1,161 @@
+# 🏛️ الهيكل المعماري لقاعدة البيانات (Database Architecture)
+
+هذا المستند يستعرض التصميم الهندسي لقاعدة البيانات الخاصة بنظام إدارة المدرسة الذكي (Multi-tenant SaaS). 
+التصميم يعتمد على قواعد **التطبيع (Database Normalization)** لعزل البيانات، تسريع الاستعلامات، وتجنب التكرار. 
+**تحديث جديد:** تم إضافة دعم **للفروع المتعددة (Campuses)** تحت نفس المدرسة (Tenant).
+
+---
+
+## 📊 مخطط الكيانات والعلاقات (ERD - Entity Relationship Diagram)
+
+```mermaid
+erDiagram
+    %% الكيانات المركزية للمدرسة والفروع
+    Tenant ||--o{ Campus : "تمتلك فروع"
+    Tenant ||--o{ User : "لديها مستخدمين"
+    Tenant ||--o{ Subject : "لديها مواد"
+    Tenant ||--o{ AcademicTerm : "لديها فصول دراسية"
+
+    Campus ||--o{ User : "مُعينون في"
+    Campus ||--o{ Classroom : "تحتوي على"
+
+    Tenant {
+        string id PK
+        string name
+        string domain
+        datetime createdAt
+    }
+
+    Campus {
+        string id PK
+        string tenantId FK
+        string name "مثال: فرع البنين، فرع البنات"
+        string address
+    }
+
+    %% إدارة المستخدمين والصلاحيات
+    User ||--o| TeacherProfile : "1:1 يمتد إلى"
+    User ||--o| StudentProfile : "1:1 يمتد إلى"
+    User ||--o| ParentProfile : "1:1 يمتد إلى"
+
+    User {
+        string id PK
+        string tenantId FK
+        string campusId FK "يمكن أن يكون Null لمدير النظام الشامل"
+        string email
+        string password
+        string firstName
+        string lastName
+        enum role "SUPER_ADMIN, SCHOOL_ADMIN, TEACHER, STUDENT, PARENT"
+        boolean isActive
+    }
+
+    %% تفاصيل الملفات الشخصية
+    TeacherProfile {
+        string id PK
+        string userId FK
+    }
+
+    StudentProfile {
+        string id PK
+        string userId FK
+        string academicId
+        string classroomId FK
+    }
+
+    ParentProfile {
+        string id PK
+        string userId FK
+    }
+
+    %% الهيكل الأكاديمي والعمليات اليومية
+    Classroom ||--o{ StudentProfile : "يحتوي على"
+    Classroom {
+        string id PK
+        string campusId FK
+        string name
+        string advisorId FK
+    }
+
+    Subject ||--o{ TeacherSubject : "تُدرَّس بواسطة"
+    TeacherProfile ||--o{ TeacherSubject : "يُدرِّس"
+    Subject {
+        string id PK
+        string tenantId FK
+        string name
+        string code
+    }
+
+    TeacherSubject {
+        string teacherId FK
+        string subjectId FK
+    }
+
+    %% علاقة الطالب بولي الأمر (أكثر من لـ أكثر من)
+    StudentProfile ||--o{ StudentParent : "ينتمي إلى"
+    ParentProfile ||--o{ StudentParent : "لديه"
+    StudentParent {
+        string studentId FK
+        string parentId FK
+        string relationType "Father, Mother, etc."
+    }
+
+    %% الفصول الدراسية
+    AcademicTerm {
+        string id PK
+        string tenantId FK
+        string name
+        datetime startDate
+        datetime endDate
+    }
+
+    %% العلامات والحضور
+    StudentProfile ||--o{ Grade : "يتلقى"
+    Subject ||--o{ Grade : "مُسجلة في"
+    AcademicTerm ||--o{ Grade : "خلال"
+    User ||--o{ Grade : "رُصِدت بواسطة"
+    
+    Grade {
+        string id PK
+        string studentId FK
+        string subjectId FK
+        string termId FK
+        string gradedById FK
+        float score
+        float maxScore
+        string type "Midterm, Final, Assignment"
+        string remarks
+    }
+
+    StudentProfile ||--o{ Attendance : "يُسجل له"
+    Attendance {
+        string id PK
+        string studentId FK
+        datetime date
+        string status "Present, Absent, Late"
+    }
+
+    %% الجداول
+    Classroom ||--o{ TimetableEvent : "مُجدول لـ"
+    Subject ||--o{ TimetableEvent : "مُجدول كـ"
+    TimetableEvent {
+        string id PK
+        string classroomId FK
+        string subjectId FK
+        int dayOfWeek
+        string startTime
+        string endTime
+    }
+```
+
+## 🧠 المبادئ الهندسية المضافة لدعم الفروع (Campuses)
+
+1. **إضافة كيان الفرع (`Campus`):**
+   - أصبح كل فرع يتبع للـ `Tenant` الأساسي. وهذا يعني أن "مدارس الأوائل" مثلاً هي الـ Tenant، ولديها "فرع الشمال" و "فرع الجنوب" كـ Campuses.
+   
+2. **ربط المستخدمين والصفوف بالفروع:**
+   - جدول `User` أصبح يحتوي على `campusId` (كمُعرّف اختياري). إذا كان `null`، فهذا يعني أن المستخدم هو (مدير عام للمدارس) ويمكنه رؤية كل الفروع. وإذا كان يحمل قيمة، فالمستخدم (طالب/معلم/مدير فرع) تقتصر صلاحياته وحضوره على هذا الفرع فقط.
+   - جدول `Classroom` (الصفوف) أصبح مرتبطاً مباشرة بالفرع (`campusId`) وليس بالـ Tenant، لضمان عدم اختلاط صفوف فرع البنين مع فرع البنات مثلاً.
+
+3. **البيانات المشتركة:**
+   - جدول `Subject` (المواد الدراسية) و `AcademicTerm` (الفصول الدراسية) بقيت مرتبطة بالـ `Tenant` لتتمكن الإدارة العامة من توحيد الخطة الأكاديمية والمقررات لجميع الفروع دون الحاجة لإدخالها لكل فرع بشكل منفصل.
